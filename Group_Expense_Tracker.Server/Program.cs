@@ -1,5 +1,7 @@
 using Group_Expense_Tracker.Server;
 using Group_Expense_Tracker.Server.Data;
+using Group_Expense_Tracker.Server.Data.Interfaces;
+using Group_Expense_Tracker.Server.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -15,6 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TrackerDbContext>(options =>
     options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyDb"))
 );
+
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 
 var app = builder.Build();
 

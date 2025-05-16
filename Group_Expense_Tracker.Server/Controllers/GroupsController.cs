@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Group_Expense_Tracker.Server.Data;
 using Group_Expense_Tracker.Server.Data.Entities;
+using Group_Expense_Tracker.Server.Data.Interfaces;
 
 namespace Group_Expense_Tracker.Server.Controllers
 {
@@ -15,9 +16,11 @@ namespace Group_Expense_Tracker.Server.Controllers
     public class GroupsController : ControllerBase
     {
         private readonly TrackerDbContext _context;
+        private readonly IGroupRepository _groupRepo;
 
-        public GroupsController(TrackerDbContext context)
+        public GroupsController(TrackerDbContext context, IGroupRepository groupRepo)
         {
+            _groupRepo = groupRepo;
             _context = context;
         }
 
@@ -25,14 +28,14 @@ namespace Group_Expense_Tracker.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Group>>> GetGroups()
         {
-            return await _context.Groups.ToListAsync();
+            return await _groupRepo.GetAll();
         }
 
         // GET: api/Groups/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Group>> GetGroup(int id)
         {
-            var @group = await _context.Groups.FindAsync(id);
+            var @group = await _groupRepo.FindByIdAsync(id);
 
             if (@group == null)
             {
@@ -52,25 +55,14 @@ namespace Group_Expense_Tracker.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(@group).State = EntityState.Modified;
+            var updatedGroup = await _groupRepo.UpdateAsync(id, group);
 
-            try
+            if(updatedGroup == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GroupExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return NoContent();
+            return Ok(updatedGroup);
         }
 
         // POST: api/Groups
@@ -78,8 +70,7 @@ namespace Group_Expense_Tracker.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Group>> PostGroup(Group @group)
         {
-            _context.Groups.Add(@group);
-            await _context.SaveChangesAsync();
+            await _groupRepo.CreateAsync(group);
 
             return CreatedAtAction("GetGroup", new { id = @group.Id }, @group);
         }
@@ -88,21 +79,18 @@ namespace Group_Expense_Tracker.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGroup(int id)
         {
-            var @group = await _context.Groups.FindAsync(id);
+            var @group = await _groupRepo.RemoveAsync(id);
             if (@group == null)
             {
                 return NotFound();
             }
-
-            _context.Groups.Remove(@group);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool GroupExists(int id)
         {
-            return _context.Groups.Any(e => e.Id == id);
+            return _groupRepo.GroupExists(id);
         }
     }
 }
