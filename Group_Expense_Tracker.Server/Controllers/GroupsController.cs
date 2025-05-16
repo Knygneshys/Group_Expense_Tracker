@@ -15,13 +15,11 @@ namespace Group_Expense_Tracker.Server.Controllers
     [ApiController]
     public class GroupsController : ControllerBase
     {
-        private readonly TrackerDbContext _context;
         private readonly IGroupRepository _groupRepo;
 
-        public GroupsController(TrackerDbContext context, IGroupRepository groupRepo)
+        public GroupsController(IGroupRepository groupRepo)
         {
             _groupRepo = groupRepo;
-            _context = context;
         }
 
         // GET: api/Groups
