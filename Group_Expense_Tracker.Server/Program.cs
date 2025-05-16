@@ -3,6 +3,7 @@ using Group_Expense_Tracker.Server.Data;
 using Group_Expense_Tracker.Server.Data.Interfaces;
 using Group_Expense_Tracker.Server.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 
 builder.Services.AddDbContext<TrackerDbContext>(options =>
     options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyDb"))
