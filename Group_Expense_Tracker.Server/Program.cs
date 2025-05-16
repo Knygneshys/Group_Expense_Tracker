@@ -25,6 +25,7 @@ builder.Services.AddDbContext<TrackerDbContext>(options =>
 );
 
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 var app = builder.Build();
 
