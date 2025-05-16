@@ -22,12 +22,12 @@ namespace Group_Expense_Tracker.Server.Data.Repositories
 
         public async Task<Group?> FindByIdAsync(int id)
         {
-            return await _context.Groups.FindAsync(id);
+            return await _context.Groups.Include(g => g.Members).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<List<Group>> GetAll()
         {
-            return await _context.Groups.ToListAsync();
+            return await _context.Groups.Include(g => g.Members).ToListAsync();
         }
 
         public bool GroupExists(int id)
@@ -58,6 +58,7 @@ namespace Group_Expense_Tracker.Server.Data.Repositories
             }
 
             existingGroup.Name = group.Name;
+            existingGroup.Members = group.Members;
 
             await _context.SaveChangesAsync();
 
