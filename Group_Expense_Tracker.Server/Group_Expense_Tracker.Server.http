@@ -1,6 +1,0 @@
-@Group_Expense_Tracker.Server_HostAddress = http://localhost:5011
-
-GET {{Group_Expense_Tracker.Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
