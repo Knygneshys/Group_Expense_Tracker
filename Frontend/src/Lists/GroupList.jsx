@@ -2,10 +2,12 @@ const apiUrl = "https://localhost:7204";
 let data;
 fetchGroups();
 
+
 function GroupList(){
     const list = data.map(group => <tr>
                                     <td>{group.name}</td>
                                     <td>0.00</td>
+                                    <td><button>Open</button></td>
                                     </tr>);
     
     return(list);

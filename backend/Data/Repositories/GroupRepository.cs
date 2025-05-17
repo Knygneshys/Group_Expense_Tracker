@@ -27,7 +27,14 @@ namespace backend.Data.Repositories
 
         public async Task<List<Group>> GetAll()
         {
-            return await _context.Groups.Include(g => g.Members).ToListAsync();
+            return await _context.Groups.ToListAsync();
+        }
+
+        public async Task<float> GetGroupDebt(int id)
+        {
+            return await _context.Members
+                .Where(member => member.GroupId == id)
+                .SumAsync(member => member.Debt);
         }
 
         public bool GroupExists(int id)

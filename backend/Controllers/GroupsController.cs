@@ -42,6 +42,18 @@ namespace backend.Controllers
 
             return @group;
         }
+        // GET: api/GroupDebt/5
+        [HttpGet("GroupDebt/{id:int}")]
+        public async Task<ActionResult<float>> GetGroupDebt(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var amount = await _groupRepo.GetGroupDebt(id);
+
+            return amount;
+        }
 
         // PUT: api/Groups/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

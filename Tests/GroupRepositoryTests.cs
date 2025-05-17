@@ -36,12 +36,12 @@ namespace Tests
             member1.Group = group1;
             var member2 = new Member(2, "Alice", "Smith", -25.5f, 1);
             member2.Group = group1;
-            var member3 = new Member(3, "Bob", "Johnson", 75.0f, 1);
+            var member3 = new Member(3, "Bob", "Johnson", 75.5f, 1);
             member3.Group = group1;
             var member4 = new Member(4, "Mike", "Brown", 100.0f, 2);
             var member5 = new Member(5, "Sarah", "Wilson", -60.0f, 2);
             var member6 = new Member(6, "Emma", "Davis", 30.0f, 3);
-            var member7 = new Member(7, "James", "Miller", -45.0f, 3);
+            var member7 = new Member(7, "James", "Miller", -47.3f, 3);
             var member8 = new Member(8, "Olivia", "Taylor", 15.0f, 3);
 
             groupList = [
@@ -178,6 +178,20 @@ namespace Tests
             // Assert
             secondGroup = await repository.FindByIdAsync(groupId);
             Assert.Equal(newName, secondGroup.Name);
+        }
+        [Theory]
+        [InlineData(1, 100f)]
+        [InlineData(2, 40f)]
+        [InlineData(3, -2.3f)]
+        public async Task GetGroupDebt_GetFirstGroupsDebt_ShouldReturn100(int id, float expected)
+        {
+            // Arrange
+            using var context = CreateContext();
+            var repository = new GroupRepository(context);
+            // Act
+            float actual = await repository.GetGroupDebt(id);
+            // Assert
+            Assert.Equal(expected, actual);
         }
     }
 }
