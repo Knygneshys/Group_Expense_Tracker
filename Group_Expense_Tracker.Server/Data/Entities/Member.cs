@@ -1,4 +1,5 @@
-﻿namespace Group_Expense_Tracker.Server.Data.Entities
+﻿
+namespace Group_Expense_Tracker.Server.Data.Entities
 {
     public class Member
     {
@@ -9,7 +10,7 @@
 
         
         public int GroupId { get; set; }
-        public Group Group { get; set; }
+        public Group? Group { get; set; }
 
         public Member(int id, string name, string surname, float debt, int groupId)
         {
@@ -20,7 +21,6 @@
             GroupId = groupId;
         }
 
-        // Parameterless constructor for EF Core
         public Member() { }
     }
 }

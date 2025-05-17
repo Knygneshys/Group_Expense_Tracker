@@ -3,20 +3,23 @@ using Group_Expense_Tracker.Server.Data.Entities;
 using Group_Expense_Tracker.Server.Data.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-
 
 namespace Tests
 {
-    public class GroupRepositoryTests : IDisposable
+    internal class MemberRepositoryTests : IDisposable
     {
         private readonly DbConnection _connection;
         private readonly DbContextOptions<TrackerDbContext> _contextOptions;
         private List<Group> groupList;
         private List<Member> memberList;
 
-        public GroupRepositoryTests()
+        public MemberRepositoryTests()
         {
             _connection = new SqliteConnection("Filename=:memory:");
             _connection.Open();
@@ -73,26 +76,5 @@ namespace Tests
             _connection.Dispose();
         }
 
-        [Fact]
-        public async Task FindByIdAsync_Id1WasPassed_ShouldReturnFirstGroup()
-        {
-            // Arrange
-            using var context = CreateContext();
-            var repository = new GroupRepository(context);
-
-            // Act
-            var group = await repository.FindByIdAsync(1);
-
-            Assert.NotNull(group);
-            Assert.Equal(groupList[0].Name, group.Name);
-            for(int i = 0; i < group.Members.Count(); i++)
-            {
-                Assert.Equal(memberList[i].Id, group.Members.ElementAt(i).Id);
-                Assert.Equal(memberList[i].Name, group.Members.ElementAt(i).Name);
-                Assert.Equal(memberList[i].Surname, group.Members.ElementAt(i).Surname);
-                Assert.Equal(memberList[i].Debt, group.Members.ElementAt(i).Debt);
-                Assert.Equal(memberList[i].GroupId, group.Members.ElementAt(i).GroupId);
-            }
-        }
     }
 }
