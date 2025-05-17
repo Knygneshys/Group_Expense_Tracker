@@ -12,12 +12,10 @@ using System.Threading.Tasks;
 
 namespace Tests
 {
-    internal class MemberRepositoryTests : IDisposable
+    public class MemberRepositoryTests : IDisposable
     {
         private readonly DbConnection _connection;
         private readonly DbContextOptions<TrackerDbContext> _contextOptions;
-        private List<Group> groupList;
-        private List<Member> memberList;
 
         public MemberRepositoryTests()
         {
@@ -31,41 +29,6 @@ namespace Tests
             using var context = new TrackerDbContext(_contextOptions);
             context.Database.EnsureCreated();
 
-            var group1 = new Group(1, "Walle");
-            var group2 = new Group(2, "Darbininkai");
-            var group3 = new Group(3, "Bites");
-
-            var member1 = new Member(1, "John", "Doe", 50.0f, 1);
-            member1.Group = group1;
-            var member2 = new Member(2, "Alice", "Smith", -25.5f, 1);
-            member2.Group = group1;
-            var member3 = new Member(3, "Bob", "Johnson", 75.0f, 1);
-            member3.Group = group1;
-            var member4 = new Member(4, "Mike", "Brown", 100.0f, 2);
-            var member5 = new Member(5, "Sarah", "Wilson", -60.0f, 2);
-            var member6 = new Member(6, "Emma", "Davis", 30.0f, 3);
-            var member7 = new Member(7, "James", "Miller", -45.0f, 3);
-            var member8 = new Member(8, "Olivia", "Taylor", 15.0f, 3);
-
-            groupList = [
-                group1,
-                group2,
-                group3
-                ];
-
-            memberList = [
-                member1,
-                member2,
-                member3,
-
-                member4,
-                member5,
-
-                member6,
-                member7,
-                member8
-                ];
-
             context.SaveChanges();
         }
 
@@ -76,5 +39,24 @@ namespace Tests
             _connection.Dispose();
         }
 
+        [Fact]
+        public async Task CreateAsync_CreateNewMemberAndAddItToGroup1_MemberListShouldIncreaByOneAndGroup1sMemberListShouldContainNewMember()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var memberRepo = new MemberRepository(context);
+            var groupRepo = new GroupRepository(context);
+            Member newMember = new Member(9, "Naujas", "Naujokas", 90, 1);
+
+            // Act
+            await memberRepo.CreateAsync(newMember);
+
+            // Assert
+            List<Member> members = await memberRepo.GetAll();
+            Group group = await groupRepo.FindByIdAsync(1);
+            Assert.Equal(9, members.Count());
+            Assert.Contains(newMember, members);
+            Assert.Contains(newMember, group.Members);
+        }
     }
 }

@@ -18,6 +18,8 @@ namespace Group_Expense_Tracker.Server.Data.Entities
         public int GroupId { get; set; }
         public Group? Group { get; set; }
 
+
+
         public Member(int id, string name, string surname, float debt, int groupId)
         {
             Id = id;
@@ -28,5 +30,20 @@ namespace Group_Expense_Tracker.Server.Data.Entities
         }
 
         public Member() { }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Member member &&
+                   Id == member.Id &&
+                   Name == member.Name &&
+                   Surname == member.Surname &&
+                   Debt == member.Debt &&
+                   GroupId == member.GroupId;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, Surname, Debt, GroupId);
+        }
     }
 }

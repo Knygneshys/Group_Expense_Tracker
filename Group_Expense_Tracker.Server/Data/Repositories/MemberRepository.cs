@@ -11,9 +11,8 @@ namespace Group_Expense_Tracker.Server.Data.Repositories
         {
             _context = context;
         }
-        public async Task<Member> CreateAsync(int groupId, Member member)
+        public async Task<Member> CreateAsync(Member member)
         {
-            member.GroupId = groupId;
             _context.Members.Add(member);
             await _context.SaveChangesAsync();
 
