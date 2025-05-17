@@ -37,13 +37,18 @@ namespace Group_Expense_Tracker.Server.Data.Repositories
 
         public async Task<Group?> RemoveAsync(int id)
         {
-            var @group = await _context.Groups.FindAsync(id);
-            if (@group == null)
+            var group = await _context.Groups.FindAsync(id);
+            if (group == null)
             {
                 return null;
             }
 
-            _context.Groups.Remove(@group);
+            if(await _context.Members.FindAsync(id) != null)
+            {
+                return null;
+            }
+
+            _context.Groups.Remove(group);
             await _context.SaveChangesAsync();
 
             return @group;

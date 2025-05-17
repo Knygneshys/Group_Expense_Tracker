@@ -17,6 +17,11 @@ namespace Group_Expense_Tracker.Server.Data.Entities
             Id = id;
             Name = name;
         }
+        // Used in testing
+        public Group(string name)
+        {
+            Name = name;
+        }
 
         public Group()
         {

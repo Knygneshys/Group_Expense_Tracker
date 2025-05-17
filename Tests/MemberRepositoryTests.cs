@@ -40,7 +40,7 @@ namespace Tests
         }
 
         [Fact]
-        public async Task CreateAsync_CreateNewMemberAndAddItToGroup1_MemberListShouldIncreaByOneAndGroup1sMemberListShouldContainNewMember()
+        public async Task CreateAsync_CreateNewMemberAndAddItToGroup1_MemberListShouldIncreaseByOneAndGroup1sMemberListShouldContainNewMember()
         {
             // Arrange
             using var context = CreateContext();

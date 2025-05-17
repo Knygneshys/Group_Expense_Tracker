@@ -85,14 +85,99 @@ namespace Tests
 
             Assert.NotNull(group);
             Assert.Equal(groupList[0].Name, group.Name);
-            for(int i = 0; i < group.Members.Count(); i++)
-            {
-                Assert.Equal(memberList[i].Id, group.Members.ElementAt(i).Id);
-                Assert.Equal(memberList[i].Name, group.Members.ElementAt(i).Name);
-                Assert.Equal(memberList[i].Surname, group.Members.ElementAt(i).Surname);
-                Assert.Equal(memberList[i].Debt, group.Members.ElementAt(i).Debt);
-                Assert.Equal(memberList[i].GroupId, group.Members.ElementAt(i).GroupId);
-            }
+            Assert.Equal(memberList.Take(3), group.Members);
+        }
+
+        [Fact]
+        public async Task FindByIdAsync_NonExistantIdWasPassed_ShouldReturnNull()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var repository = new GroupRepository(context);
+
+            // Act
+            var group = await repository.FindByIdAsync(100);
+
+            // Assert
+            Assert.Null(group);
+        }
+
+        [Fact]
+        public async Task CreateAsync_Create4thGroup_ThereShouldBe4Groups()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var repository = new GroupRepository(context);
+            Group expected = new Group(5, "Naujokai");
+
+            // Act
+            await repository.CreateAsync(expected);
+
+            // Assert
+            List<Group> groups = await repository.GetAll();
+            Assert.Equal(5, groups.Count());
+            Assert.Contains(expected, groups);
+        }
+
+        [Theory]
+        [InlineData(1, true)]
+        [InlineData(-1, false)]
+        [InlineData(100, false)]
+        public void GroupExists(int id, bool expected)
+        {
+            // Arrange
+            using var context = CreateContext();
+            var repository = new GroupRepository(context);
+            // Act
+            bool actual = repository.GroupExists(id);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task RemoveAsync_PassedId4_ShouldRemove4thGroup()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var repository = new GroupRepository(context);
+            // Act
+            var actual = await repository.RemoveAsync(4);
+            // Assert
+            List<Group> groups = await repository.GetAll();
+            Assert.Equal(4, groups.Count);
+            Assert.DoesNotContain(actual, groups);
+        }
+        [Fact]
+        public async Task RemoveAsync_PassedId1_ShouldNotRemoveGroupBecauseItHasMembers()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var repository = new GroupRepository(context);
+            // Act
+            var actual = await repository.RemoveAsync(1);
+            // Assert
+            List<Group> groups = await repository.GetAll();
+            Assert.Equal(4, groups.Count);
+            Assert.Null(actual);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_Update2ndGroup_2ndGroupsNameShouldBeChanged()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var repository = new GroupRepository(context);
+            int groupId = 2;
+            string newName = "Atnaujinta";
+            Group secondGroup = await repository.FindByIdAsync(groupId);
+            Group newGroup = new Group(newName);
+            newGroup.Members = secondGroup.Members;
+            // Act
+            await repository.UpdateAsync(groupId, newGroup);
+            // Assert
+            secondGroup = await repository.FindByIdAsync(groupId);
+            Assert.Equal(newName, secondGroup.Name);
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Group_Expense_Tracker.Server.Data
             modelBuilder.Entity<Group>().HasData(
                 new Group(1, "Walle"),
                 new Group(2, "Darbininkai"),
-                new Group(3, "Bitės")
+                new Group(3, "Bitės"),
+                new Group(4, "EmptyGroup")
                 );
             modelBuilder.Entity<Member>().HasData(
                 new Member(1, "John", "Doe", 50.0f, 1),
