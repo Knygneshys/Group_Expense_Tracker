@@ -5,13 +5,14 @@ import './App.css'
 
 // (parameters) => some code
 
+const apiUrl = "https://localhost:7204";
+let data;
 fetchGroups();
 
 function App() {
 
   return (
     <>
-
     </>
   )
 }
@@ -19,14 +20,15 @@ function App() {
 async function fetchGroups()
 {
   try{
-    const response = await fetch("https://localhost:7204/api/Groups");
+    const response = await fetch(`${apiUrl}/api/Groups`);
     
     if(!response.ok){
       throw new Error("Could not fetch groups");
     }
     
-    const data = await response.json();
+    data = await response.json();
     console.log(data);
+    data.forEach(value => console.log(value));
   } 
   catch(error){
     console.log(error)
