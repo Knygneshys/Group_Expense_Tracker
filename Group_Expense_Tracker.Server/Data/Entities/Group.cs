@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Member>? Members { get; set; }
+        public ICollection<Member>? Members { get; set; } = new List<Member>();
 
         public Group(int id, string name)
         {
