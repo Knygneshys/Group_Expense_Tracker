@@ -1,10 +1,7 @@
-using Group_Expense_Tracker.Server;
-using Group_Expense_Tracker.Server.Data;
-using Group_Expense_Tracker.Server.Data.Interfaces;
-using Group_Expense_Tracker.Server.Data.Repositories;
+using backend.Data.Entities;
+using backend.Data.Interfaces;
+using backend.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,9 +47,6 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -67,7 +61,5 @@ app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapFallbackToFile("/index.html");
 
 app.Run();

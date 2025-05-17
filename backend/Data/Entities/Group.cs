@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace Group_Expense_Tracker.Server.Data.Entities
+namespace backend.Data.Entities
 {
     public class Group
     {

@@ -1,6 +1,6 @@
-﻿using Group_Expense_Tracker.Server.Data;
-using Group_Expense_Tracker.Server.Data.Entities;
-using Group_Expense_Tracker.Server.Data.Repositories;
+﻿using backend.Data;
+using backend.Data.Entities;
+using backend.Data.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;

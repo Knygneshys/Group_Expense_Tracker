@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Group_Expense_Tracker.Server\Group_Expense_Tracker.Server.csproj" />
+    <ProjectReference Include="..\backend\backend.csproj" />
   </ItemGroup>
 
   <ItemGroup>
