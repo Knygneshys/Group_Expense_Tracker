@@ -29,7 +29,7 @@ namespace Group_Expense_Tracker.Server.Controllers
         }
 
         // GET: api/Members/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Member>> GetMember(int id)
         {
             var member = await _memberRepo.FindByIdAsync(id);
@@ -44,9 +44,14 @@ namespace Group_Expense_Tracker.Server.Controllers
 
         // PUT: api/Members/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> PutMember(int id, Member member)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             if (id != member.Id)
             {
                 return BadRequest();
@@ -67,15 +72,24 @@ namespace Group_Expense_Tracker.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Member>> PostMember(Member member)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             await _memberRepo.CreateAsync(member);
 
             return CreatedAtAction("GetMember", new { id = member.Id }, member);
         }
 
         // DELETE: api/Members/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteMember(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var member = await _memberRepo.RemoveAsync(id);
             if (member == null)
             {

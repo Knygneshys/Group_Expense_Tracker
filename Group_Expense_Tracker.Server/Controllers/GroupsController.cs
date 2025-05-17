@@ -30,7 +30,7 @@ namespace Group_Expense_Tracker.Server.Controllers
         }
 
         // GET: api/Groups/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Group>> GetGroup(int id)
         {
             var @group = await _groupRepo.FindByIdAsync(id);
@@ -45,9 +45,13 @@ namespace Group_Expense_Tracker.Server.Controllers
 
         // PUT: api/Groups/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> PutGroup(int id, Group @group)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             if (id != @group.Id)
             {
                 return BadRequest();
@@ -68,15 +72,23 @@ namespace Group_Expense_Tracker.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Group>> PostGroup(Group @group)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             await _groupRepo.CreateAsync(group);
 
             return CreatedAtAction("GetGroup", new { id = @group.Id }, @group);
         }
 
         // DELETE: api/Groups/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteGroup(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var @group = await _groupRepo.RemoveAsync(id);
             if (@group == null)
             {
