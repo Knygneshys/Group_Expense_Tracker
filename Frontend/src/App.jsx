@@ -11,9 +11,8 @@ function App() {
 
   return (
     <>
-    <table>
+      <h1>Groups</h1>
       <GroupList/>
-    </table>
     </>
   )
 }
