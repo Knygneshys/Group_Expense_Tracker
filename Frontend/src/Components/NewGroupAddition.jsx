@@ -1,7 +1,7 @@
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-function NewGroupAddition()
+function NewGroupAddition({refreshDad})
 {
     async function createNewGroup(formData)
     {
@@ -20,6 +20,7 @@ function NewGroupAddition()
                 throw new Error("Failed to add new group");
             }
             console.log(`Added new group: \"${groupName}\" succesfully!`);
+            refreshDad(x => x+1);
         }
         catch(error) {
             console.log(error);

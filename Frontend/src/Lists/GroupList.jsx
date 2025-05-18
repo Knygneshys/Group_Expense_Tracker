@@ -7,8 +7,12 @@ const apiUrl = import.meta.env.VITE_API_URL;
 function GroupList(){
     const [groups, setGroups] = useState("empty");
     const [groupDebts, setGroupDebts] = useState("empty")
+    const [refresh, setRefresh] = useState(0);
+    
     useEffect(()=>{
       async function getData() {
+        setGroups("empty");
+        setGroupDebts("empty");
         const data = await fetchGroups();
         setGroups(data);
 
@@ -26,7 +30,7 @@ function GroupList(){
         }
       }
       getData();
-    },[]);
+    },[refresh]);
 
     const navigate = useNavigate();
 
@@ -54,7 +58,7 @@ function GroupList(){
             {list}
           </tbody>
         </table>
-        <NewGroupAddition />
+        <NewGroupAddition refreshDad={setRefresh}/>
       </div>   
       );
     }
