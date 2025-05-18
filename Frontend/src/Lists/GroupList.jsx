@@ -1,15 +1,26 @@
+import React, {useState, useEffect} from "react";
+
 const apiUrl = "https://localhost:7204";
-let data;
-fetchGroups();
-// fetchGroupDebts();
+
+// fetchGroupDebts(1);
 
 function GroupList(){
-    const list = data.map(group => <tr key={group.name}>
+    const [groups, setGroups] = useState("empty");
+
+    useEffect(()=>{
+      async function getData() {
+        const data = await fetchGroups();
+        setGroups(data);
+      }
+      getData();
+    },[]);
+    if(groups != "empty")
+    {
+      const list = groups.map(group => <tr key={group.name}>
                                     <td>{group.name}</td>
                                     <td>0.00</td>
                                     <td><button>Open</button></td>
                                     </tr>);
-    
     return(   
       <table>
         <thead>
@@ -23,6 +34,10 @@ function GroupList(){
         </tbody>
       </table>   
       );
+    }
+
+    return (<div>Loading...</div>);
+
 }
 
 async function fetchGroups()
@@ -34,9 +49,12 @@ async function fetchGroups()
       throw new Error("Could not fetch groups");
     }
     
-    data = await response.json();
+    const data = await response.json();
+    // setGroups(data);
     console.log(data);
     data.forEach(value => console.log(value));
+
+    return data;
   } 
   catch(error){
     console.log(error)
@@ -52,7 +70,7 @@ async function fetchGroupDebts(id)
           throw new Error(`Failed to receive group nr: ${id} debts`);
         }
 
-        debt = await response.json();
+        const debt = await response.json();
         console.log(debt);
 
     }

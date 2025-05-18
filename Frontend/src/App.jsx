@@ -8,7 +8,7 @@ import GroupList from './Lists/GroupList.jsx'
 
 
 function App() {
-
+  document.title = `Group Finance Tracker`;
   return (
     <>
       <h1>Groups</h1>
