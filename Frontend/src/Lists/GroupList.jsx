@@ -2,23 +2,37 @@ import React, {useState, useEffect} from "react";
 
 const apiUrl = "https://localhost:7204";
 
-// fetchGroupDebts(1);
-
 function GroupList(){
     const [groups, setGroups] = useState("empty");
-
+    const [groupDebts, setGroupDebts] = useState("empty")
     useEffect(()=>{
       async function getData() {
         const data = await fetchGroups();
         setGroups(data);
+
+        if(data && Array.isArray(data))
+        {
+          const debtArray = {};
+          for(let i = 0; i < data.length; i++)
+          {
+            const groupId = data[i].id;
+            const debt = await fetchGroupDebts(groupId);
+            debtArray[groupId] = debt;
+            console.log(debt);
+          }
+          setGroupDebts(debtArray);
+        }
       }
       getData();
     },[]);
-    if(groups != "empty")
+
+
+
+    if(groups != "empty" && groupDebts != "empty")
     {
       const list = groups.map(group => <tr key={group.name}>
                                     <td>{group.name}</td>
-                                    <td>0.00</td>
+                                    <td>{groupDebts[group.Id]}</td>
                                     <td><button>Open</button></td>
                                     </tr>);
     return(   
@@ -50,7 +64,6 @@ async function fetchGroups()
     }
     
     const data = await response.json();
-    // setGroups(data);
     console.log(data);
     data.forEach(value => console.log(value));
 
@@ -71,8 +84,7 @@ async function fetchGroupDebts(id)
         }
 
         const debt = await response.json();
-        console.log(debt);
-
+        return debt;
     }
     catch(error){
       console.log(error);
