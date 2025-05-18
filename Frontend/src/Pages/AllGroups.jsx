@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
-import './Groups.css'
+import './AllGroups.css'
 import GroupList from '../Lists/GroupList.jsx'
 // (parameters) => some code
 
 
 
-function Groups() {
+function AllGroups() {
   document.title = `Group Finance Tracker`;
   return (
     <>
@@ -18,4 +18,4 @@ function Groups() {
 }
 
 
-export default Groups
+export default AllGroups

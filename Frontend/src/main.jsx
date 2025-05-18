@@ -1,10 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Groups from './Pages/Groups.jsx'
+import AllGroups from './Pages/AllGroups.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Groups />
+    <AllGroups />
   </StrictMode>,
 )
