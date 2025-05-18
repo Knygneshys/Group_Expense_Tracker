@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route index element={<AllGroups/>} />
-        <Route path="/Groups" element={<AllGroups/>} />
+        <Route path="/GroupList" element={<AllGroups/>} />
         <Route path="/Group/:id" element={<Group/>} />
       </Routes>
     </BrowserRouter>

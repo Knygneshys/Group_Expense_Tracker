@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import NewGroupAddition from "../Components/NewGroupAddition";
 
 const apiUrl = "https://localhost:7204";
 
@@ -40,18 +41,21 @@ function GroupList(){
                                     <td>{groupDebts[group.id].toFixed(2)}</td>
                                     <td><button onClick={()=>goToGroup(group.id)}>Open</button></td>
                                     </tr>);
-    return(   
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Debt</th>
-          </tr>  
-        </thead>
-        <tbody>
-          {list}
-        </tbody>
-      </table>   
+    return( 
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Debt</th>
+            </tr>  
+          </thead>
+          <tbody>
+            {list}
+          </tbody>
+        </table>
+        <NewGroupAddition />
+      </div>   
       );
     }
 
