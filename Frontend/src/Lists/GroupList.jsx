@@ -36,7 +36,7 @@ function GroupList(){
 
     if(groups != "empty" && groupDebts != "empty")
     {
-      const list = groups.map(group => <tr key={group.name}>
+      const list = groups.map(group => <tr key={group.id}>
                                     <td>{group.name}</td>
                                     <td>{groupDebts[group.id].toFixed(2)}</td>
                                     <td><button onClick={()=>goToGroup(group.id)}>Open</button></td>
