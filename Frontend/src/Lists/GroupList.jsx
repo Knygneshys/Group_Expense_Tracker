@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = "https://localhost:7204";
 
@@ -27,14 +27,18 @@ function GroupList(){
       getData();
     },[]);
 
+    const navigate = useNavigate();
 
+    const goToGroup = (groupId) =>{
+      navigate(`/Group/${groupId}`)
+    }
 
     if(groups != "empty" && groupDebts != "empty")
     {
       const list = groups.map(group => <tr key={group.name}>
                                     <td>{group.name}</td>
                                     <td>{groupDebts[group.id].toFixed(2)}</td>
-                                    <td><button>Open</button></td>
+                                    <td><button onClick={()=>goToGroup(group.id)}>Open</button></td>
                                     </tr>);
     return(   
       <table>
