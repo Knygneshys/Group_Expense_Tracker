@@ -1,5 +1,5 @@
 
-const apiUrl = "https://localhost:7204";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function NewGroupAddition()
 {
@@ -11,7 +11,7 @@ function NewGroupAddition()
         }
 
         try{
-            const response = await fetch('https://localhost:7204/api/Groups',{
+            const response = await fetch(`${apiUrl}/api/Groups`,{
                 method: `POST`,
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(group)
