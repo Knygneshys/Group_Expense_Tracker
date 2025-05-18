@@ -32,7 +32,7 @@ function GroupList(){
     {
       const list = groups.map(group => <tr key={group.name}>
                                     <td>{group.name}</td>
-                                    <td>{groupDebts[group.Id]}</td>
+                                    <td>{groupDebts[group.id].toFixed(2)}</td>
                                     <td><button>Open</button></td>
                                     </tr>);
     return(   
