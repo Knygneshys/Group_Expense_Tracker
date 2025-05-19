@@ -3,13 +3,13 @@ import { forwardRef } from "react";
 const apiUrl = import.meta.env.VITE_API_URL;
 let closeDialog;
 let groupId;
-let setMem;
+let refreshDad;
 
 const MemberDialogContent = forwardRef(
-  ({ toggleDialog, gId, setMembers }, ref) => {
+  ({ toggleDialog, gId, setRefresh }, ref) => {
     closeDialog = toggleDialog;
     groupId = gId;
-    setMem = setMembers;
+    refreshDad = setRefresh;
     return (
       <>
         <div>
@@ -74,7 +74,7 @@ async function addMember(formData) {
     console.log(error);
   }
 
-  setMem((m) => [...m, member]);
+  refreshDad((x) => ++x);
   closeDialog();
 }
 

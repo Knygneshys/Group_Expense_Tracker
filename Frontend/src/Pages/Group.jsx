@@ -10,6 +10,7 @@ function Group() {
   const [group, setGroup] = useState(null);
   const [debt, setDebt] = useState(null);
   const [members, setMembers] = useState([]);
+  const [refresh, setRefresh] = useState(0);
 
   const dialogRef = useRef(null);
 
@@ -34,7 +35,7 @@ function Group() {
       }
     }
     getData();
-  }, [groupId, members]);
+  }, [groupId, members, refresh]);
 
   function toggleDialog() {
     if (!dialogRef.current) {
@@ -56,7 +57,7 @@ function Group() {
           <MemberDialogContent
             toggleDialog={toggleDialog}
             gId={groupId}
-            setMembers={setMembers}
+            setRefresh={setRefresh}
             ref={dialogRef}
           />
         </dialog>
