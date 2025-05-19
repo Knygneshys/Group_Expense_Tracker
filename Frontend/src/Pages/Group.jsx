@@ -41,7 +41,7 @@ function Group() {
     return (
       <div>
         <h1>{group.name}</h1>
-        <h3>Current group debt: {debt}</h3>
+        <h3>Current group debt: {debt.toFixed(2)}</h3>
         <MemberList members={members} />
       </div>
     );

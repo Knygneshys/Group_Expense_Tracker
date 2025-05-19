@@ -1,11 +1,12 @@
 function MemberList({ members }) {
   console.log(members);
-  if (members !== null) {
+  if (members !== null && members.length > 0) {
     const list = members.map((mem) => (
       <tr key={mem.id}>
         <td>{mem.name}</td>
         <td>{mem.surname}</td>
-        <td>{mem.debt}</td>
+        <td>{mem.debt.toFixed(2)}</td>
+        <td>{fetchSettleButton(mem)}</td>
       </tr>
     ));
 
@@ -23,7 +24,17 @@ function MemberList({ members }) {
     );
   }
 
-  return <h2>Loading...</h2>;
+  return <h2>Group is empty</h2>;
+}
+
+function fetchSettleButton(member) {
+  if (member.debt === null || member.debt != 0) {
+    return <button onClick={() => settleDebt(member.id)}>Settle</button>;
+  }
+}
+
+async function settleDebt(id) {
+  console.log(id);
 }
 
 export default MemberList;
