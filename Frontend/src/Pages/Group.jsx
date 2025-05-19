@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MemberList from "../Lists/MemberList";
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -9,6 +9,8 @@ function Group() {
   const [group, setGroup] = useState(null);
   const [debt, setDebt] = useState(null);
   const [members, setMembers] = useState([]);
+
+  const dialogRef = useRef(null);
 
   useEffect(() => {
     const parsedId = parseInt(id, 10);
@@ -29,13 +31,18 @@ function Group() {
           setMembers(fetchedGroup.members);
         }
       }
-      //     return <p>{id}</p>;
-      //   } else {
-      //     return <p>Oops... An error has occured!</p>;
-      //   }
     }
     getData();
   }, [groupId, members]);
+
+  function toggleDialog() {
+    if (!dialogRef.current) {
+      return;
+    }
+    dialogRef.current.hasAttribute("open")
+      ? dialogRef.current.close()
+      : dialogRef.current.showModal();
+  }
 
   if (group !== null) {
     return (
@@ -43,6 +50,8 @@ function Group() {
         <h1>{group.name}</h1>
         <h3>Current group debt: {debt.toFixed(2)}</h3>
         <MemberList members={members} />
+        <button onClick={toggleDialog}>Add new member</button>
+        <dialog ref={dialogRef}>Content</dialog>
       </div>
     );
   } else {
