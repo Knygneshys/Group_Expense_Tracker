@@ -53,8 +53,7 @@ function Group() {
         <MemberList members={members} />
         <button onClick={toggleDialog}>Add new member</button>
         <dialog ref={dialogRef}>
-          <MemberDialogContent />
-          <button onClick={toggleDialog}>Close</button>
+          <MemberDialogContent toggleDialog={toggleDialog} ref={dialogRef} />
         </dialog>
       </div>
     );
