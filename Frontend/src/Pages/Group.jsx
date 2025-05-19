@@ -1,24 +1,31 @@
 import { useParams } from "react-router-dom";
+import React, {useState, useEffect} from "react";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function Group()
 {
+    const {id} = useParams();
+    const [groupId, setGroupId] = useState();
+  
 
+    useEffect( () => {
+        async function getData() {
+            setGroupId(parseInt(id, 10));
+            if(Number.isInteger(groupId)) {
+                const group = await fetchGroup(groupId);
 
-    const renderMessage = () => {
-        const {id} = useParams();
-        const groupId = parseInt(id, 10);
-        if(Number.isInteger(groupId)) {
-            fetchGroup(groupId);
-            return <p>{id}</p>;
-        } 
-        else {
-            return <p>Oops... An error has occured!</p>;
+                return <p>{id}</p>;
+            } 
+            else {
+                return <p>Oops... An error has occured!</p>;
+            }
         }
-    };
+        getData();
+    },[groupId]);
+
     return(
         <>
-            {renderMessage()}
+           <p>Hello, group nr. {groupId}</p>
         </>
     )
 }
@@ -26,7 +33,6 @@ function Group()
 async function fetchGroup(id)
 {
     try{
-        console.log(id)
         const response = await fetch(`${apiUrl}/api/Groups/${id}`);
         if(!response.ok) {
             throw new Error(`Failed to fetch group by id: ${id}`);
@@ -34,6 +40,7 @@ async function fetchGroup(id)
 
         const data = await response.json();
         console.log(data);
+        return data;
     }
     catch(error){
         console.log(error);

@@ -24,7 +24,6 @@ function GroupList(){
             const groupId = data[i].id;
             const debt = await fetchGroupDebts(groupId);
             debtArray[groupId] = debt;
-            console.log(debt);
           }
           setGroupDebts(debtArray);
         }
@@ -77,8 +76,6 @@ async function fetchGroups()
     }
     
     const data = await response.json();
-    console.log(data);
-    data.forEach(value => console.log(value));
 
     return data;
   } 
