@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import MemberList from "../Lists/MemberList";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function Group() {
@@ -41,6 +42,7 @@ function Group() {
       <div>
         <h1>{group.name}</h1>
         <h3>Current group debt: {debt}</h3>
+        <MemberList members={members} />
       </div>
     );
   } else {
