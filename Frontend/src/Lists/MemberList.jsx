@@ -31,10 +31,16 @@ function fetchSettleButton(member) {
   if (member.debt === null || member.debt != 0) {
     return <button onClick={() => settleDebt(member.id)}>Settle</button>;
   }
+
+  return <button onClick={() => removeMember(member.id)}>Remove</button>;
 }
 
 async function settleDebt(id) {
   console.log(id);
+}
+
+async function removeMember(id) {
+  console.log(`Remove ${id}`);
 }
 
 export default MemberList;

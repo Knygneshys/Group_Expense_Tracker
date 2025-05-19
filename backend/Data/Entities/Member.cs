@@ -21,10 +21,17 @@ namespace backend.Data.Entities
         public Group? Group { get; set; }
 
 
-
         public Member(int id, string name, string surname, float debt, int groupId)
         {
             Id = id;
+            Name = name;
+            Surname = surname;
+            Debt = debt;
+            GroupId = groupId;
+        }
+
+        public Member(string name, string surname, float debt, int groupId)
+        {
             Name = name;
             Surname = surname;
             Debt = debt;
