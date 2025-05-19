@@ -27,20 +27,29 @@ function Group() {
         ) {
           setMembers(fetchedGroup.members);
         }
-
-        return <p>{id}</p>;
-      } else {
-        return <p>Oops... An error has occured!</p>;
       }
+      //     return <p>{id}</p>;
+      //   } else {
+      //     return <p>Oops... An error has occured!</p>;
+      //   }
     }
     getData();
   }, [groupId, members]);
 
-  return (
-    <>
-      <p>Hello, group nr. {groupId}</p>
-    </>
-  );
+  if (group !== null) {
+    return (
+      <div>
+        <h1>{group.name}</h1>
+        <h3>Current group debt: {debt}</h3>
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <h1>Loading...</h1>
+      </>
+    );
+  }
 }
 
 async function fetchGroup(id) {
