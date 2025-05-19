@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import MemberList from "../Lists/MemberList";
+import MemberDialogContent from "../Components/MemberDialogContent";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function Group() {
@@ -51,7 +52,10 @@ function Group() {
         <h3>Current group debt: {debt.toFixed(2)}</h3>
         <MemberList members={members} />
         <button onClick={toggleDialog}>Add new member</button>
-        <dialog ref={dialogRef}>Content</dialog>
+        <dialog ref={dialogRef}>
+          <MemberDialogContent />
+          <button onClick={toggleDialog}>Close</button>
+        </dialog>
       </div>
     );
   } else {
