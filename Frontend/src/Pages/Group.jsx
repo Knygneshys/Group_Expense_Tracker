@@ -51,7 +51,7 @@ function Group() {
       <div>
         <h1>{group.name}</h1>
         <h3>Current group debt: {debt.toFixed(2)}</h3>
-        <MemberList members={members} />
+        <MemberList members={members} setRefresh={setRefresh} />
         <button onClick={toggleDialog}>Add new member</button>
         <dialog ref={dialogRef}>
           <MemberDialogContent
