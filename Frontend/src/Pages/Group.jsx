@@ -6,13 +6,24 @@ function Group()
 {
     const {id} = useParams();
     const [groupId, setGroupId] = useState();
-  
+    const [members, setMembers] = useState([]);
+
+    useEffect(()=> {
+        const parsedId = parseInt(id, 10);
+        setGroupId(parsedId);
+    },[])
 
     useEffect( () => {
         async function getData() {
-            setGroupId(parseInt(id, 10));
             if(Number.isInteger(groupId)) {
                 const group = await fetchGroup(groupId);
+
+                if(JSON.stringify(members) !== JSON.stringify(group.members))
+                {
+                    setMembers(group.members);
+                }
+                
+                console.log(members);
 
                 return <p>{id}</p>;
             } 
@@ -21,7 +32,8 @@ function Group()
             }
         }
         getData();
-    },[groupId]);
+    },[groupId, members]);
+
 
     return(
         <>
