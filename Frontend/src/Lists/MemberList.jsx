@@ -1,3 +1,5 @@
+const apiUrl = import.meta.env.VITE_API_URL;
+
 function MemberList({ members }) {
   console.log(members);
   if (members !== null && members.length > 0) {
@@ -40,7 +42,19 @@ async function settleDebt(id) {
 }
 
 async function removeMember(id) {
-  console.log(`Remove ${id}`);
+  try {
+    const response = await fetch(`${apiUrl}/api/Members/${id}`, {
+      method: `DELETE`,
+      body: { id },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete member of id: ${id}`);
+    }
+    console.log(`Succesfully deleted member of id: ${id}`);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export default MemberList;
