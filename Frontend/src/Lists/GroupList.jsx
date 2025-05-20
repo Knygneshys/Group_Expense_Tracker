@@ -4,7 +4,7 @@ import NewGroupAddition from "../Components/NewGroupInserter";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-function GroupList() {
+const GroupList = () => {
   const [groups, setGroups] = useState("empty");
   const [groupDebts, setGroupDebts] = useState("empty");
   const [refresh, setRefresh] = useState(0);
@@ -62,7 +62,7 @@ function GroupList() {
   }
 
   return <div>Loading...</div>;
-}
+};
 
 async function fetchGroups() {
   try {

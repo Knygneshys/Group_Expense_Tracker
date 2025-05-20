@@ -1,6 +1,6 @@
 const apiUrl = import.meta.env.VITE_API_URL;
 
-function MemberList({ members, setRefresh }) {
+const MemberList = ({ members, setRefresh }) => {
   if (members !== null && members.length > 0) {
     const list = members.map((mem) => (
       <tr key={mem.id}>
@@ -26,7 +26,7 @@ function MemberList({ members, setRefresh }) {
   }
 
   return <h2>Group is empty</h2>;
-}
+};
 
 function fetchSettleButton(member, setRefresh) {
   if (member.debt === null || member.debt != 0) {

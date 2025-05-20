@@ -1,41 +1,37 @@
-
 const apiUrl = import.meta.env.VITE_API_URL;
 
-function NewGroupAddition({refreshDad})
-{
-    async function createNewGroup(formData)
-    {
-        const groupName = formData.get("groupName");
-        const group = {
-            name: groupName
-        }
+const NewGroupAddition = ({ refreshDad }) => {
+  async function createNewGroup(formData) {
+    const groupName = formData.get("groupName");
+    const group = {
+      name: groupName,
+    };
 
-        try{
-            const response = await fetch(`${apiUrl}/api/Groups`,{
-                method: `POST`,
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(group)
-            });
-            if(!response.ok){
-                throw new Error("Failed to add new group");
-            }
-            console.log(`Added new group: \"${groupName}\" succesfully!`);
-            refreshDad(x => x+1);
-        }
-        catch(error) {
-            console.log(error);
-        }
+    try {
+      const response = await fetch(`${apiUrl}/api/Groups`, {
+        method: `POST`,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(group),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to add new group");
+      }
+      console.log(`Added new group: \"${groupName}\" succesfully!`);
+      refreshDad((x) => x + 1);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    return(
+  return (
     <form action={createNewGroup}>
-        <label>
-            New group's name: <input name="groupName" required type="text" placeholder="Group name"/>
-        </label>
-        <button type="submit">Create new group</button>
-    </form>)
-}
+      <label>
+        New group's name:{" "}
+        <input name="groupName" required type="text" placeholder="Group name" />
+      </label>
+      <button type="submit">Create new group</button>
+    </form>
+  );
+};
 
-
-
-export default NewGroupAddition
+export default NewGroupAddition;

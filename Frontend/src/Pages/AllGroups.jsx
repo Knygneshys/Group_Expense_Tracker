@@ -1,21 +1,17 @@
-import { useState } from 'react'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '/vite.svg'
-import './Css/AllGroups.css'
-import GroupList from '../Lists/GroupList.jsx'
-// (parameters) => some code
+import { useState } from "react";
+import reactLogo from "../assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./Css/AllGroups.css";
+import GroupList from "../Lists/GroupList.jsx";
 
-
-
-function AllGroups() {
+const AllGroups = () => {
   document.title = `Group Finance Tracker`;
   return (
     <>
       <h1>Groups</h1>
-      <GroupList/>
+      <GroupList />
     </>
-  )
-}
+  );
+};
 
-
-export default AllGroups
+export default AllGroups;
