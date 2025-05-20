@@ -11,6 +11,8 @@ using Backend.Data.Interfaces;
 
 namespace Backend.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TransactionsController : ControllerBase
     {
         private readonly ITransactionRepository _transRepo;
@@ -21,7 +23,7 @@ namespace Backend.Controllers
         }
 
         // GET
-        [HttpGet("{id:int}")]
+        [HttpGet("{groupId:int}")]
         public async Task<ActionResult<List<Transaction>>> GetAllByGroupId(int groupId)
         {
             var transactions = await _transRepo.GetAllFromGroup(groupId);

@@ -20,6 +20,16 @@ namespace Backend.Data.Entities
         public string Date { get; set; } = DateTime.Today.ToShortDateString();
         public List<TransactionRecipient> Recipients { get; set; }
 
+        public Transaction(int id, int groupId, int senderId, float amount, char splitType, List<TransactionRecipient> recipients)
+        {
+            Id = id;
+            GroupId = groupId;
+            SenderId = senderId;
+            Amount = amount;
+            SplitType = splitType;
+            Recipients = recipients;
+        }
+
         public Transaction(int groupId, int senderId, float amount, char splitType, List<TransactionRecipient> recipients)
         {
             GroupId = groupId;

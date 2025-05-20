@@ -15,7 +15,8 @@ namespace Backend.Data.Entities
         // public int TransactionId { get; set; }
         public int RecipientId { get; set; }
         public float Payment { get; set; } = 0;
-        public Transaction Transaction { get; set; }
+        public int TransactionId { get; set; }
+        public Transaction? Transaction { get; set; }
 
         public TransactionRecipient(int recipientId)
         {

@@ -55,7 +55,7 @@ namespace Tests
             using var context = CreateContext();
             var transRepo = new TransactionRepository(context);
             var memRepo = new MemberRepository(context);
-            Transaction transaction = new Transaction(3, 10, 159.99f, 'E', new List<TransactionRecipient>
+            Transaction transaction = new Transaction(6, 3, 10, 159.99f, 'E', new List<TransactionRecipient>
             {
                 new TransactionRecipient(6),
                 new TransactionRecipient(7),
@@ -141,7 +141,7 @@ namespace Tests
                 new TransactionRecipient(6, 8)
             });
 
-            // Arrange
+            // Act
             var actual = await transRepo.CreateAsync(transaction);
 
             // Assert
@@ -160,7 +160,7 @@ namespace Tests
                 new TransactionRecipient(4, 40),
                 new TransactionRecipient(5, 60),
             });
-            // Arrange
+            // Act
 
             var actual = await transRepo.CreateAsync(transaction);
 
@@ -170,5 +170,23 @@ namespace Tests
             Assert.Equal(100f, recipient4.Debt, 2);
             Assert.Equal(0, recipient5.Debt, 2);
         }
+
+        [Theory]
+        [InlineData(1, 3)]
+        [InlineData(2, 2)]
+        public async Task GetAllFromGroup_GetsAllTransactionFromGroupWithGivenId_TransactionCountsShouldBeCorrect(int groupId, int expected)
+        {
+            // Arrange
+            using var context = CreateContext();
+            var transRepo = new TransactionRepository(context);
+            var memRepo = new MemberRepository(context);
+
+            // Act
+            var actual = await transRepo.GetAllFromGroup(groupId);
+
+            // Assert
+            Assert.Equal(expected, actual.Count);
+        }
+
     }
 }
