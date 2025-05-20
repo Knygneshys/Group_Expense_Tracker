@@ -32,17 +32,17 @@ namespace Tests
             var group2 = new Group(2, "Darbininkai");
             var group3 = new Group(3, "Bites");
 
-            var member1 = new Member(1, "John", "Doe", 50.0f, 1);
+            var member1 = new Member(1, "John", "Doe", 50.0m, 1);
             member1.Group = group1;
-            var member2 = new Member(2, "Alice", "Smith", -25.5f, 1);
+            var member2 = new Member(2, "Alice", "Smith", -25.5m, 1);
             member2.Group = group1;
-            var member3 = new Member(3, "Bob", "Johnson", 75.5f, 1);
+            var member3 = new Member(3, "Bob", "Johnson", 75.5m, 1);
             member3.Group = group1;
-            var member4 = new Member(4, "Mike", "Brown", 100.0f, 2);
-            var member5 = new Member(5, "Sarah", "Wilson", -60.0f, 2);
-            var member6 = new Member(6, "Emma", "Davis", 30.0f, 3);
-            var member7 = new Member(7, "James", "Miller", -47.3f, 3);
-            var member8 = new Member(8, "Olivia", "Taylor", 15.0f, 3);
+            var member4 = new Member(4, "Mike", "Brown", 100.0m, 2);
+            var member5 = new Member(5, "Sarah", "Wilson", -60.0m, 2);
+            var member6 = new Member(6, "Emma", "Davis", 30.0m, 3);
+            var member7 = new Member(7, "James", "Miller", -47.3m, 3);
+            var member8 = new Member(8, "Olivia", "Taylor", 15.0m, 3);
 
             groupList = [
                 group1,
@@ -180,16 +180,16 @@ namespace Tests
             Assert.Equal(newName, secondGroup.Name);
         }
         [Theory]
-        [InlineData(1, 100f)]
-        [InlineData(2, 40f)]
-        [InlineData(3, -2.3f)]
-        public async Task GetGroupDebt_GetFirstGroupsDebt_ShouldReturn100(int id, float expected)
+        [InlineData(1, 100)]
+        [InlineData(2, 40)]
+        [InlineData(3, -2.3)]
+        public async Task GetGroupDebt_GetFirstGroupsDebt_ShouldReturn100(int id, decimal expected)
         {
             // Arrange
             using var context = CreateContext();
             var repository = new GroupRepository(context);
             // Act
-            float actual = await repository.GetGroupDebt(id);
+            var actual = await repository.GetGroupDebt(id);
             // Assert
             Assert.Equal(expected, actual);
         }

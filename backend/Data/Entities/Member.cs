@@ -14,7 +14,7 @@ namespace backend.Data.Entities
         [Required(ErrorMessage = "Please provide member surname!")]
         public string Surname { get; set; }
         [Required(ErrorMessage = "Please provide member debt amount!")]
-        public float Debt { get; set; } = 0;
+        public decimal Debt { get; set; } = 0;
 
         [Required(ErrorMessage = "Please provide which group the member belongs to!")]
         public int GroupId { get; set; }
@@ -22,7 +22,7 @@ namespace backend.Data.Entities
         public bool isDeleted { get; set; } = false;
 
 
-        public Member(int id, string name, string surname, float debt, int groupId)
+        public Member(int id, string name, string surname, decimal debt, int groupId)
         {
             Id = id;
             Name = name;
@@ -31,7 +31,7 @@ namespace backend.Data.Entities
             GroupId = groupId;
         }
 
-        public Member(string name, string surname, float debt, int groupId)
+        public Member(string name, string surname, decimal debt, int groupId)
         {
             Name = name;
             Surname = surname;

@@ -44,7 +44,7 @@ namespace backend.Controllers
         }
         // GET: api/GroupDebt/5
         [HttpGet("GroupDebt/{id:int}")]
-        public async Task<ActionResult<float>> GetGroupDebt(int id)
+        public async Task<ActionResult<decimal>> GetGroupDebt(int id)
         {
             if (!ModelState.IsValid)
             {

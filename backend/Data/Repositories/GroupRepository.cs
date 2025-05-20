@@ -43,7 +43,7 @@ namespace backend.Data.Repositories
             return groups;
         }
 
-        public async Task<float> GetGroupDebt(int id)
+        public async Task<decimal> GetGroupDebt(int id)
         {
             return await _context.Members
                 .Where(member => member.GroupId == id)

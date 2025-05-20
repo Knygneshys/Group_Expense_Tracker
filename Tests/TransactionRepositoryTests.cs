@@ -32,8 +32,8 @@ namespace Tests
             using var context = new TrackerDbContext(_contextOptions);
             context.Database.EnsureCreated();
 
-            var member9 = new Member(9, "Lala", "Land", -50.34f, 1);
-            var member10 = new Member(10, "New", "Blood", -5.79f, 3);
+            var member9 = new Member(9, "Lala", "Land", -50.34m, 1);
+            var member10 = new Member(10, "New", "Blood", -5.79m, 3);
 
             context.Members.Add(member9);
             context.Members.Add(member10);
@@ -55,7 +55,7 @@ namespace Tests
             using var context = CreateContext();
             var transRepo = new TransactionRepository(context);
             var memRepo = new MemberRepository(context);
-            Transaction transaction = new Transaction(6, 3, 10, 159.99f, 'E', new List<TransactionRecipient>
+            Transaction transaction = new Transaction(6, 3, 10, 159.99m, 'E', new List<TransactionRecipient>
             {
                 new TransactionRecipient(6),
                 new TransactionRecipient(7),
@@ -72,10 +72,10 @@ namespace Tests
             Member recipient8 = await memRepo.FindByIdAsync(8);
             Member recipient10 = await memRepo.FindByIdAsync(10);
             Assert.NotNull(actual);
-            Assert.Equal(30.0f, recipient6.Debt);
+            Assert.Equal(30.0m, recipient6.Debt);
             Assert.Equal(0, recipient7.Debt);
-            Assert.Equal(15.0f, recipient8.Debt);
-            Assert.Equal(-5.79f, recipient10.Debt, 2);
+            Assert.Equal(15.0m, recipient8.Debt);
+            Assert.Equal(-5.79m, recipient10.Debt);
         }
 
         [Fact]
@@ -85,10 +85,10 @@ namespace Tests
             using var context = CreateContext();
             var transRepo = new TransactionRepository(context);
             var memRepo = new MemberRepository(context);
-            Transaction transaction = new Transaction(1, 3, 30.53f, 'D', new List<TransactionRecipient>
+            Transaction transaction = new Transaction(1, 3, 30.53m, 'D', new List<TransactionRecipient>
             {
-                new TransactionRecipient(2, 20.3f),
-                new TransactionRecipient(9, 10.23f)
+                new TransactionRecipient(2, 20.3m),
+                new TransactionRecipient(9, 10.23m)
             });
 
             // Act
@@ -98,8 +98,8 @@ namespace Tests
             Member recipient1 = await memRepo.FindByIdAsync(2);
             Member recipient2 = await memRepo.FindByIdAsync(9);
             Assert.NotNull(actual);
-            Assert.Equal(-5.2f, recipient1.Debt, 2);
-            Assert.Equal(-40.11f, recipient2.Debt, 2);
+            Assert.Equal(-5.2m, recipient1.Debt);
+            Assert.Equal(-40.11m, recipient2.Debt);
         }
 
         [Fact]
@@ -109,10 +109,10 @@ namespace Tests
             using var context = CreateContext();
             var transRepo = new TransactionRepository(context);
             var memRepo = new MemberRepository(context);
-            Transaction transaction = new Transaction(1, 3, 40.53f, 'D', new List<TransactionRecipient>
+            Transaction transaction = new Transaction(1, 3, 40.53m, 'D', new List<TransactionRecipient>
             {
-                new TransactionRecipient(2, 30.3f),
-                new TransactionRecipient(9, 10.23f)
+                new TransactionRecipient(2, 30.3m),
+                new TransactionRecipient(9, 10.23m)
             });
 
             // Act
@@ -122,8 +122,8 @@ namespace Tests
             Member recipient1 = await memRepo.FindByIdAsync(2);
             Member recipient2 = await memRepo.FindByIdAsync(9);
             Assert.NotNull(actual);
-            Assert.Equal(0f, recipient1.Debt, 2);
-            Assert.Equal(-40.11f, recipient2.Debt, 2);
+            Assert.Equal(0m, recipient1.Debt);
+            Assert.Equal(-40.11m, recipient2.Debt);
         }
 
 
@@ -167,8 +167,8 @@ namespace Tests
             // Assert
             Member recipient4 = await memRepo.FindByIdAsync(4);
             Member recipient5 = await memRepo.FindByIdAsync(5);
-            Assert.Equal(100f, recipient4.Debt, 2);
-            Assert.Equal(0, recipient5.Debt, 2);
+            Assert.Equal(100m, recipient4.Debt);
+            Assert.Equal(0m, recipient5.Debt);
         }
 
         [Theory]

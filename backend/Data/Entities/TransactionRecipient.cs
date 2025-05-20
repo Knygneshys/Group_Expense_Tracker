@@ -14,7 +14,7 @@ namespace Backend.Data.Entities
         public int Id { get; set; }
         // public int TransactionId { get; set; }
         public int RecipientId { get; set; }
-        public float Payment { get; set; } = 0;
+        public decimal Payment { get; set; } = 0;
         public int TransactionId { get; set; }
         public Transaction? Transaction { get; set; }
 
@@ -23,7 +23,7 @@ namespace Backend.Data.Entities
             RecipientId = recipientId;
         }
 
-        public TransactionRecipient(int recipientId, float payment) : this(recipientId)
+        public TransactionRecipient(int recipientId, decimal payment) : this(recipientId)
         {
             Payment = payment;
         }

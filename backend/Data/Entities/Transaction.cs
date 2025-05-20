@@ -15,12 +15,12 @@ namespace Backend.Data.Entities
         public int Id { get; set; }
         public int GroupId { get; set; }
         public int SenderId { get; set; }
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
         public char SplitType { get; set; }
         public string Date { get; set; } = DateTime.Today.ToShortDateString();
         public List<TransactionRecipient> Recipients { get; set; }
 
-        public Transaction(int id, int groupId, int senderId, float amount, char splitType, List<TransactionRecipient> recipients)
+        public Transaction(int id, int groupId, int senderId, decimal amount, char splitType, List<TransactionRecipient> recipients)
         {
             Id = id;
             GroupId = groupId;
@@ -30,7 +30,7 @@ namespace Backend.Data.Entities
             Recipients = recipients;
         }
 
-        public Transaction(int groupId, int senderId, float amount, char splitType, List<TransactionRecipient> recipients)
+        public Transaction(int groupId, int senderId, decimal amount, char splitType, List<TransactionRecipient> recipients)
         {
             GroupId = groupId;
             SenderId = senderId;

@@ -10,6 +10,6 @@ namespace backend.Data.Interfaces
         Task<Group> CreateAsync(Group group);
         bool GroupExists(int id);
         Task<Group?> UpdateAsync(int id, Group group);
-        Task<float> GetGroupDebt(int id);
+        Task<decimal> GetGroupDebt(int id);
     }
 }

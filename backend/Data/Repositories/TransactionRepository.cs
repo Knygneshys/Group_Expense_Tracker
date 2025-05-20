@@ -14,7 +14,7 @@ namespace Backend.Data.Repositories
         }
         public async Task<Transaction> CreateAsync(Transaction transaction)
         {
-            float amount;
+            decimal amount;
             switch (transaction.SplitType)
             {
                 case ('E'):
@@ -47,7 +47,7 @@ namespace Backend.Data.Repositories
             return transaction;
         }
 
-        private async Task ReadjustDebt(int recipientId, float amount, int senderId)
+        private async Task ReadjustDebt(int recipientId, decimal amount, int senderId)
         {
             Member? member = await _context.Members.FindAsync(recipientId);
             if (member != null && member.Id != senderId && member.Debt < 0)
