@@ -19,13 +19,16 @@ namespace Backend.Data.Repositories
                 case ('D'):
                     foreach (TransactionRecipient recipient in transaction.Recipients)
                     {
-                        Member? member = await _context.Members.FindAsync(recipient.RecipientId);
-                        if(member == null) { continue; }
-                        if(member.Debt < 0)
-                        {
-                            member.Debt += recipient.Payment;
-                            await _context.SaveChangesAsync();
-                        }
+                        await ReadjustDebt(recipient.RecipientId, recipient.Payment, transaction.SenderId);
+                    }
+                    break;
+                case ('E'):
+                    int memberCount = transaction.Recipients.Count;
+                    var senderIsUser = transaction.SenderId == 0;
+                    float amount = senderIsUser ? transaction.Amount/memberCount : transaction.Amount/(memberCount - 1);
+                    foreach(TransactionRecipient recipient in transaction.Recipients)
+                    {
+                        await ReadjustDebt(recipient.RecipientId, amount, transaction.SenderId);
                     }
                     break;
             }
@@ -33,6 +36,17 @@ namespace Backend.Data.Repositories
             await _context.SaveChangesAsync();
 
             return transaction;
+        }
+
+        private async Task ReadjustDebt(int recipientId, float amount, int senderId)
+        {
+            Member? member = await _context.Members.FindAsync(recipientId);
+            if (member != null && member.Id != senderId && member.Debt < 0)
+            {
+                member.Debt += amount;
+                if (member.Debt > 0) { member.Debt = 0; }
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<List<Transaction>?> GetAllFromGroup(int groupId)
