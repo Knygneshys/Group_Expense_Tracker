@@ -38,8 +38,7 @@ namespace backend.Data.Entities
 
             modelBuilder.Entity<Transaction>()
                 .HasMany(t => t.Recipients)
-                .WithOne(tr => tr.Transaction)
-                .HasForeignKey(tr => tr.TransactionId);
+                .WithOne(tr => tr.Transaction);
         }
     }
 }

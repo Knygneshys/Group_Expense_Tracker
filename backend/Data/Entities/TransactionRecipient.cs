@@ -12,15 +12,18 @@ namespace Backend.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int TransactionId { get; set; }
+        // public int TransactionId { get; set; }
         public int RecipientId { get; set; }
-        public float Payment { get; set; }
-        public Transaction? Transaction { get; set; }
+        public float Payment { get; set; } = 0;
+        public Transaction Transaction { get; set; }
 
-        public TransactionRecipient(int transactionId, int recipientId, float payment)
+        public TransactionRecipient(int recipientId)
         {
-            TransactionId = transactionId;
             RecipientId = recipientId;
+        }
+
+        public TransactionRecipient(int recipientId, float payment) : this(recipientId)
+        {
             Payment = payment;
         }
     }

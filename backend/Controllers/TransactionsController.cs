@@ -22,9 +22,9 @@ namespace Backend.Controllers
 
         // GET
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<List<Transaction>>> GetAllByGroupId(int id)
+        public async Task<ActionResult<List<Transaction>>> GetAllByGroupId(int groupId)
         {
-            var transactions = await _transRepo.GetAllFromGroup(id);
+            var transactions = await _transRepo.GetAllFromGroup(groupId);
             if (transactions == null) { return NotFound(); }
 
             return transactions;
