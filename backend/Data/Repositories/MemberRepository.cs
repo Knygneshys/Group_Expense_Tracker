@@ -21,17 +21,18 @@ namespace backend.Data.Repositories
 
         public async Task<Member?> FindByIdAsync(int id)
         {
-            return await _context.Members.FindAsync(id);
+            var member = await _context.Members.FindAsync(id);
+            return (member == null || member.isDeleted) ? null : member;
         }
 
         public async Task<List<Member>> GetAll()
         {
-            return await _context.Members.ToListAsync();
+            return await _context.Members.Where(mem => mem.isDeleted == false).ToListAsync();
         }
 
         public bool MemberExists(int id)
         {
-            return _context.Members.Any(e => e.Id == id);
+            return _context.Members.Any(e => e.Id == id && e.isDeleted == false);
         }
 
         public async Task<Member?> RemoveAsync(int id)
@@ -42,7 +43,8 @@ namespace backend.Data.Repositories
                 return null;
             }
 
-            _context.Members.Remove(member);
+            // _context.Members.Remove(member);
+            member.isDeleted = true;
             await _context.SaveChangesAsync();
 
             return member;
@@ -53,7 +55,7 @@ namespace backend.Data.Repositories
 
             var existingMember = await _context.Members.FindAsync(id);
 
-            if(existingMember == null) { return null; }
+            if(existingMember == null || existingMember.isDeleted) { return null; }
 
             existingMember.Name = member.Name;
             existingMember.Surname = member.Surname;

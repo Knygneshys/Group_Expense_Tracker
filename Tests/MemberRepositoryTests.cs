@@ -58,5 +58,70 @@ namespace Tests
             Assert.Contains(newMember, members);
             Assert.Contains(newMember, group.Members);
         }
+
+        [Fact]
+        public async Task RemoveAsync_RemoveMemberOfId2_GroupReturnedByFindByAsyncShouldNotContainMemberOfId2()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var memberRepo = new MemberRepository(context);
+            var groupRepo = new GroupRepository(context);
+            int id = 2;
+            Member member = await memberRepo.FindByIdAsync(id);
+            // Act
+            await memberRepo.RemoveAsync(id);
+
+            // Assert
+            Group group = await groupRepo.FindByIdAsync(1);
+            Assert.False(group.Members.Contains(member));
+        }
+
+        [Fact]
+        public async Task RemoveAsync_RemoveMemberOfId2_FindMemberByIdAsyncShouldReturnNull()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var memberRepo = new MemberRepository(context);
+            int id = 2;
+            // Act
+            await memberRepo.RemoveAsync(id);
+
+            // Assert
+            Member actual = await memberRepo.FindByIdAsync(id);
+            Assert.Null(actual);
+        }
+
+        [Fact]
+        public async Task RemoveAsync_RemoveMemberOfId2_GetAllMembersShouldReturn7MembersInsteadOf8()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var memberRepo = new MemberRepository(context);
+            int id = 2;
+            Member member = await memberRepo.FindByIdAsync(id);
+            // Act
+            await memberRepo.RemoveAsync(id);
+
+            // Assert
+            List<Member> members = await memberRepo.GetAll();
+            Assert.Equal(7, members.Count);
+        }
+
+        [Fact]
+        public async Task RemoveAsync_RemoveMemberOfId2_GroupsGetAllShouldReturnGroup1With2MembersInsteadOf3()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var memberRepo = new MemberRepository(context);
+            var groupRepo = new GroupRepository(context);
+            int id = 2;
+            Member member = await memberRepo.FindByIdAsync(id);
+            // Act
+            await memberRepo.RemoveAsync(id);
+
+            // Assert
+            List<Group> groups = await groupRepo.GetAll();
+            Assert.False(groups[0].Members.Contains(member));
+        }
     }
 }

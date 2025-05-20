@@ -22,12 +22,25 @@ namespace backend.Data.Repositories
 
         public async Task<Group?> FindByIdAsync(int id)
         {
-            return await _context.Groups.Include(g => g.Members).FirstOrDefaultAsync(i => i.Id == id);
+            Group? group = await _context.Groups.Include(g => g.Members).FirstOrDefaultAsync(i => i.Id == id);
+            if(group != null && group.Members != null)
+            {
+                group.Members = group.Members.Where(mem => mem.isDeleted == false).ToList();
+            }
+
+            return group;
         }
 
         public async Task<List<Group>> GetAll()
         {
-            return await _context.Groups.ToListAsync();
+            List<Group> groups = await _context.Groups.ToListAsync();
+
+            foreach(Group group in groups)
+            {
+                group.Members = group.Members.Where(mem => mem.isDeleted == false).ToList();
+            }
+
+            return groups;
         }
 
         public async Task<float> GetGroupDebt(int id)

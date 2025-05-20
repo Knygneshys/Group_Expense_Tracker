@@ -19,6 +19,7 @@ namespace backend.Data.Entities
         [Required(ErrorMessage = "Please provide which group the member belongs to!")]
         public int GroupId { get; set; }
         public Group? Group { get; set; }
+        public bool isDeleted { get; set; } = false;
 
 
         public Member(int id, string name, string surname, float debt, int groupId)
