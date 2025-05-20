@@ -1,13 +1,20 @@
+import { useNavigate } from "react-router-dom";
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const MemberList = ({ members, setRefresh }) => {
+  const navigate = useNavigate();
+  const goToTransaction = (groupId, memberId) => {
+    navigate(`/Transaction/${groupId}/${memberId}`);
+  };
+
   if (members !== null && members.length > 0) {
     const list = members.map((mem) => (
       <tr key={mem.id}>
         <td>{mem.name}</td>
         <td>{mem.surname}</td>
         <td>{mem.debt.toFixed(2)}</td>
-        <td>{fetchSettleButton(mem, setRefresh)}</td>
+        <td>{fetchSettleButton(mem, setRefresh, goToTransaction)}</td>
       </tr>
     ));
 
@@ -28,9 +35,13 @@ const MemberList = ({ members, setRefresh }) => {
   return <h2>Group is empty</h2>;
 };
 
-function fetchSettleButton(member, setRefresh) {
+function fetchSettleButton(member, setRefresh, goToTransaction) {
   if (member.debt === null || member.debt != 0) {
-    return <button onClick={() => settleDebt(member.id)}>Settle</button>;
+    return (
+      <button onClick={() => settleDebt(member, goToTransaction)}>
+        Settle
+      </button>
+    );
   }
 
   return (
@@ -45,8 +56,9 @@ function fetchSettleButton(member, setRefresh) {
   );
 }
 
-async function settleDebt(id) {
-  console.log(id);
+async function settleDebt(member, goToTransaction) {
+  console.log(member);
+  goToTransaction(member.id, member.groupId);
 }
 
 async function removeMember(id) {

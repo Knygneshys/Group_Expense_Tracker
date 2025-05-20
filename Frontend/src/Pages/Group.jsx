@@ -4,7 +4,7 @@ import MemberList from "../Lists/MemberList";
 import MemberDialogContent from "../Components/MemberDialogContent";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-function Group() {
+const Group = () => {
   const { id } = useParams();
   const [groupId, setGroupId] = useState();
   const [group, setGroup] = useState(null);
@@ -53,6 +53,7 @@ function Group() {
         <h3>Current group debt: {debt.toFixed(2)}</h3>
         <MemberList members={members} setRefresh={setRefresh} />
         <button onClick={toggleDialog}>Add new member</button>
+
         <dialog ref={dialogRef}>
           <MemberDialogContent
             toggleDialog={toggleDialog}
@@ -70,7 +71,7 @@ function Group() {
       </>
     );
   }
-}
+};
 
 async function fetchGroup(id) {
   try {
