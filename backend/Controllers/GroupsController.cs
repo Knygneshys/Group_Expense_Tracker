@@ -88,9 +88,8 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
-            await _groupRepo.CreateAsync(group);
 
-            return CreatedAtAction("GetGroup", new { id = @group.Id }, @group);
+            return await _groupRepo.CreateAsync(group);
         }
 
         // DELETE: api/Groups/5

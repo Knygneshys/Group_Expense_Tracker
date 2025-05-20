@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Backend.Data.Entities;
+using backend.Data.Entities;
+using Backend.Data.Interfaces;
+
+namespace Backend.Controllers
+{
+    public class TransactionsController : ControllerBase
+    {
+        private readonly ITransactionRepository _transRepo;
+
+        public TransactionsController(ITransactionRepository transactionRepository)
+        {
+            _transRepo = transactionRepository;
+        }
+
+        // GET
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<Transaction>>> GetAllByGroupId(int id)
+        {
+            var transactions = await _transRepo.GetAllFromGroup(id);
+            if (transactions == null) { return NotFound(); }
+
+            return transactions;
+        }
+
+        // POST
+        [HttpPost]
+        public async Task<ActionResult<Transaction>> CreateTransaction(Transaction transaction)
+        {
+            return await _transRepo.CreateAsync(transaction);
+        }
+    }
+}
