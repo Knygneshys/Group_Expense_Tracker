@@ -1,6 +1,8 @@
 using backend.Data.Entities;
 using backend.Data.Interfaces;
 using backend.Data.Repositories;
+using Backend.Data.Interfaces;
+using Backend.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,7 @@ builder.Services.AddDbContext<TrackerDbContext>(options =>
 
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 var provider = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();

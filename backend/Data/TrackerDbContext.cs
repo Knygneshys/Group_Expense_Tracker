@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Backend.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data.Entities
 {
@@ -6,6 +7,8 @@ namespace backend.Data.Entities
     {
         public DbSet<Group> Groups { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionRecipient> TransactionRecipients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +35,11 @@ namespace backend.Data.Entities
                 .HasOne(m => m.Group)
                 .WithMany(g => g.Members)
                 .HasForeignKey(m => m.GroupId);
+
+            modelBuilder.Entity<Transaction>()
+                .HasMany(t => t.Recipients)
+                .WithOne(tr => tr.Transaction)
+                .HasForeignKey(tr => tr.TransactionId);
         }
     }
 }
