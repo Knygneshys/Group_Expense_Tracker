@@ -31,40 +31,10 @@ namespace Tests
 
             using var context = new TrackerDbContext(_contextOptions);
             context.Database.EnsureCreated();
-            var group1 = new Group(1, "Walle");
-            var group2 = new Group(2, "Darbininkai");
-            var group3 = new Group(3, "Bites");
 
-            var member1 = new Member(1, "John", "Doe", 50.0f, 1);
-            member1.Group = group1;
-            var member2 = new Member(2, "Alice", "Smith", -25.5f, 1);
-            member2.Group = group1;
-            var member3 = new Member(3, "Bob", "Johnson", 75.5f, 1);
-            member3.Group = group1;
-            var member4 = new Member(4, "Mike", "Brown", 100.0f, 2);
-            var member5 = new Member(5, "Sarah", "Wilson", -60.0f, 2);
-            var member6 = new Member(6, "Emma", "Davis", 30.0f, 3);
-            var member7 = new Member(7, "James", "Miller", -47.3f, 3);
-            var member8 = new Member(8, "Olivia", "Taylor", 15.0f, 3);
+            var member9 = new Member(9, "Lala", "Land", -50.34f, 1);
 
-            groupList = [
-                group1,
-                group2,
-                group3
-                ];
-
-            memberList = [
-                member1,
-                member2,
-                member3,
-
-                member4,
-                member5,
-
-                member6,
-                member7,
-                member8
-                ];
+            context.Members.Add(member9);
 
             context.SaveChanges();
         }
@@ -82,18 +52,21 @@ namespace Tests
             using var context = CreateContext();
             var transRepo = new TransactionRepository(context);
             var memRepo = new MemberRepository(context);
-            Transaction transaction = new Transaction(1, 3, 20.3f, 'D', new List<TransactionRecipient>
+            Transaction transaction = new Transaction(1, 3, 30.53f, 'D', new List<TransactionRecipient>
             {
-                new TransactionRecipient(2, 20.3f)
+                new TransactionRecipient(2, 20.3f),
+                new TransactionRecipient(9, 10.23f)
             });
 
             // Act
             var actual = await transRepo.CreateAsync(transaction);
 
             // Assert
-            Member recipient = await memRepo.FindByIdAsync(2);
+            Member recipient1 = await memRepo.FindByIdAsync(2);
+            Member recipient2 = await memRepo.FindByIdAsync(9);
             Assert.NotNull(actual);
-            Assert.Equal(-5.2, recipient.Debt);
+            Assert.Equal(-5.2f, recipient1.Debt, 2);
+            Assert.Equal(-40.11f, recipient2.Debt, 2);
         }
     }
 }

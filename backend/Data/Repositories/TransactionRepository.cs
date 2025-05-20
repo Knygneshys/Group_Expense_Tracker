@@ -14,7 +14,21 @@ namespace Backend.Data.Repositories
         }
         public async Task<Transaction> CreateAsync(Transaction transaction)
         {
-
+            switch (transaction.SplitType)
+            {
+                case ('D'):
+                    foreach (TransactionRecipient recipient in transaction.Recipients)
+                    {
+                        Member? member = await _context.Members.FindAsync(recipient.RecipientId);
+                        if(member == null) { continue; }
+                        if(member.Debt < 0)
+                        {
+                            member.Debt += recipient.Payment;
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+                    break;
+            }
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
 
