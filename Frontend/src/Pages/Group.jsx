@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import MemberList from "../Lists/MemberList";
 import MemberDialogContent from "../Components/MemberDialogContent";
@@ -14,6 +14,10 @@ const Group = () => {
 
   const dialogRef = useRef(null);
 
+  const navigate = useNavigate();
+  const goToTransaction = (groupId, memberId = 0) => {
+    navigate(`/Transaction/${groupId}/${memberId}`);
+  };
   useEffect(() => {
     const parsedId = parseInt(id, 10);
     setGroupId(parsedId);
@@ -51,9 +55,19 @@ const Group = () => {
       <div>
         <h1>{group.name}</h1>
         <h3>Current group debt: {debt.toFixed(2)}</h3>
-        <MemberList members={members} setRefresh={setRefresh} />
+        <MemberList
+          members={members}
+          setRefresh={setRefresh}
+          goToTransaction={goToTransaction}
+        />
         <button onClick={toggleDialog}>Add new member</button>
-
+        <button
+          onClick={() => {
+            goToTransaction(groupId, 0);
+          }}
+        >
+          Make transaction
+        </button>
         <dialog ref={dialogRef}>
           <MemberDialogContent
             toggleDialog={toggleDialog}

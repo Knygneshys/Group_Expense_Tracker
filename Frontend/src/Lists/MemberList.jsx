@@ -1,13 +1,6 @@
-import { useNavigate } from "react-router-dom";
-
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const MemberList = ({ members, setRefresh }) => {
-  const navigate = useNavigate();
-  const goToTransaction = (groupId, memberId) => {
-    navigate(`/Transaction/${groupId}/${memberId}`);
-  };
-
+const MemberList = ({ members, setRefresh, goToTransaction }) => {
   if (members !== null && members.length > 0) {
     const list = members.map((mem) => (
       <tr key={mem.id}>
