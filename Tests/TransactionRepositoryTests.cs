@@ -125,5 +125,50 @@ namespace Tests
             Assert.Equal(0f, recipient1.Debt, 2);
             Assert.Equal(-40.11f, recipient2.Debt, 2);
         }
+
+
+        [Fact]
+        public async Task CreateAsync_CreatesNewPercentTransactionWherePercentagesDoNotAddUpTo100_ShouldReturnNull()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var transRepo = new TransactionRepository(context);
+            var memRepo = new MemberRepository(context);
+            Transaction transaction = new Transaction(3, 0, 100, 'P', new List<TransactionRecipient>
+            {
+                new TransactionRecipient(6, 0),
+                new TransactionRecipient(6, 7),
+                new TransactionRecipient(6, 8)
+            });
+
+            // Arrange
+            var actual = await transRepo.CreateAsync(transaction);
+
+            // Assert
+            Assert.Null(actual);
+        }
+
+        [Fact]
+        public async Task CreateAsync_CreatesNewPercentTransactionInGroup2_Group2sMemberOfId5ShouldHaveReducedDebt()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var transRepo = new TransactionRepository(context);
+            var memRepo = new MemberRepository(context);
+            Transaction transaction = new Transaction(2, 0, 100, 'P', new List<TransactionRecipient>
+            {
+                new TransactionRecipient(4, 40),
+                new TransactionRecipient(5, 60),
+            });
+            // Arrange
+
+            var actual = await transRepo.CreateAsync(transaction);
+
+            // Assert
+            Member recipient4 = await memRepo.FindByIdAsync(4);
+            Member recipient5 = await memRepo.FindByIdAsync(5);
+            Assert.Equal(100f, recipient4.Debt, 2);
+            Assert.Equal(0, recipient5.Debt, 2);
+        }
     }
 }

@@ -14,21 +14,30 @@ namespace Backend.Data.Repositories
         }
         public async Task<Transaction> CreateAsync(Transaction transaction)
         {
+            float amount;
             switch (transaction.SplitType)
             {
+                case ('E'):
+                    int memberCount = transaction.Recipients.Count;
+                    var senderIsUser = transaction.SenderId == 0;
+                    amount = senderIsUser ? transaction.Amount / memberCount : transaction.Amount / (memberCount - 1);
+                    foreach (TransactionRecipient recipient in transaction.Recipients)
+                    {
+                        await ReadjustDebt(recipient.RecipientId, amount, transaction.SenderId);
+                    }
+                    break;
+                case ('P'):
+                    if(transaction.Recipients.Sum(rt => rt.Payment) != 100) { return null; }
+                    foreach(TransactionRecipient recipient in transaction.Recipients)
+                    {
+                        amount = transaction.Amount * recipient.Payment / 100;
+                        await ReadjustDebt(recipient.RecipientId, amount, transaction.SenderId);
+                    }
+                    break;
                 case ('D'):
                     foreach (TransactionRecipient recipient in transaction.Recipients)
                     {
                         await ReadjustDebt(recipient.RecipientId, recipient.Payment, transaction.SenderId);
-                    }
-                    break;
-                case ('E'):
-                    int memberCount = transaction.Recipients.Count;
-                    var senderIsUser = transaction.SenderId == 0;
-                    float amount = senderIsUser ? transaction.Amount/memberCount : transaction.Amount/(memberCount - 1);
-                    foreach(TransactionRecipient recipient in transaction.Recipients)
-                    {
-                        await ReadjustDebt(recipient.RecipientId, amount, transaction.SenderId);
                     }
                     break;
             }
