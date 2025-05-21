@@ -14,6 +14,7 @@ namespace Backend.Data.Repositories
         }
         public async Task<Transaction> CreateAsync(Transaction transaction)
         {
+
             decimal amount;
             switch (transaction.SplitType)
             {
@@ -35,6 +36,8 @@ namespace Backend.Data.Repositories
                     }
                     break;
                 case ('D'):
+                    bool sumsAreEqual = transaction.Recipients.Sum(rt => rt.Payment) == transaction.Amount;
+                    if (!sumsAreEqual) { return null; }
                     foreach (TransactionRecipient recipient in transaction.Recipients)
                     {
                         await ReadjustDebt(recipient.RecipientId, recipient.Payment, transaction.SenderId);
@@ -57,6 +60,7 @@ namespace Backend.Data.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
 
         public async Task<List<Transaction>?> GetAllFromGroup(int groupId)
         {

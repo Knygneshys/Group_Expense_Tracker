@@ -36,7 +36,10 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Transaction>> CreateTransaction(Transaction transaction)
         {
-            return await _transRepo.CreateAsync(transaction);
+            var t = await _transRepo.CreateAsync(transaction);
+            if (t == null) { return BadRequest(); }
+
+            return t;
         }
     }
 }

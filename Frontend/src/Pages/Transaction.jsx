@@ -22,18 +22,21 @@ const Transaction = () => {
     setPayerId(params.memberId);
   }, []);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("PAVYKO!");
-    const transaction = {
-      groupId: groupId,
-      senderId: payerId,
-      amount: amount,
-      splitType: splitType,
-      recipients: recipientPaymentsRef.current.getPayments(),
-    };
+    if (amount > 0) {
+      console.log("Posting...");
+      const transaction = {
+        groupId: groupId,
+        senderId: payerId,
+        amount: amount,
+        splitType: splitType,
+        recipients: recipientPaymentsRef.current.getPayments(),
+      };
 
-    console.log(transaction);
+      console.log(transaction);
+      await postTransaction(transaction);
+    }
   }
 
   if (group !== undefined && members.length > 0) {
@@ -109,6 +112,22 @@ async function fetchGroup(groupID) {
     return group;
   } catch (error) {
     conmsole.log(error);
+  }
+}
+
+async function postTransaction(transaction) {
+  try {
+    const response = await fetch(`${apiUrl}/api/Transactions`, {
+      method: `POST`,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(transaction),
+    });
+
+    if (!response.ok) {
+      throw new Error("Transaction failed");
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
 

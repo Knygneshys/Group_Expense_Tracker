@@ -4,7 +4,7 @@ import SplitTypeInput from "./Inputs/SplitTypeInput";
 const SplitTypeRecipientList = ({
   recipients,
   placeholder,
-  handlePaymentChange,
+  handleValueChange,
   payerId,
 }) => {
   return recipients.map((r, index) => {
@@ -15,7 +15,7 @@ const SplitTypeRecipientList = ({
             {r.name} {r.surname}. Current debt: {r.debt}.
           </label>
           <SplitTypeInput
-            handleValueChange={handlePaymentChange}
+            handleValueChange={handleValueChange}
             index={index}
             placeholder={placeholder}
           />
