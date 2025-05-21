@@ -41,8 +41,10 @@ const Transaction = () => {
   }
 
   if (group !== undefined && members.length > 0) {
-    const list = members.map((mem) => mem.id);
-    const memberIds = [0, ...list];
+    const idList = members.map((mem) => mem.id);
+    const memberIds = [0, ...idList];
+    const memberNameList = members.map((mem) => `${mem.name} ${mem.surname}`);
+    const displayedValues = [`You`, ...memberNameList];
 
     return (
       <>
@@ -50,7 +52,11 @@ const Transaction = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Sender:</label>
-            <Dropdown items={memberIds} setSelectedValue={setPayerId} />
+            <Dropdown
+              items={memberIds}
+              setSelectedValue={setPayerId}
+              displayedValues={displayedValues}
+            />
             <label>Payment amount: </label>
             <input
               name="amount"
@@ -64,7 +70,11 @@ const Transaction = () => {
             ></input>
             <br />
             <label>Split type: </label>
-            <Dropdown items={splitTypes} setSelectedValue={setSplitType} />
+            <Dropdown
+              items={splitTypes}
+              setSelectedValue={setSplitType}
+              displayedValues={splitTypes}
+            />
           </div>
           <div>
             <TransactionRecipientsList
