@@ -1,42 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import TransactionRecipientsList from "../Lists/TransactionRecipientsList";
+import Dropdown from "../Components/Dropdown/Dropdown";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Transaction = () => {
   const params = useParams();
   const [members, setMembers] = useState([]);
+  const [group, setGroup] = useState();
   const groupId = params.groupId;
-
+  const splitTypes = ["D", "E", "P"];
   useEffect(() => {
-    getData(setMembers, groupId);
-  }, [members]);
+    getData(setMembers, setGroup, groupId);
+  }, []);
 
-  return (
-    <>
-      <h1>New Transaction</h1>
-      <div>
-        {groupId} and {params.memberId}
-      </div>
-    </>
-  );
+  if (group !== undefined) {
+    return (
+      <>
+        <h1>New Transaction in {group.name}</h1>
+        <div>
+          <label>Payment amount: </label>
+          <input type="number" min="0" placeholder="0" required></input>
+          <br />
+          <label>Split type: </label>
+          <Dropdown items={splitTypes} />
+        </div>
+        <div>
+          <TransactionRecipientsList />
+        </div>
+      </>
+    );
+  }
+
+  return <h1>Loading...</h1>;
 };
 
-async function getData(setMembers, groupId) {
-  const fetchedMembers = await fetchMembers(groupId);
-  console.log(fetchedMembers);
+async function getData(setMembers, setGroup, groupId) {
+  const fetchedGroup = await fetchGroup(groupId);
+  setGroup(fetchedGroup);
+  setMembers(fetchedGroup.members);
 }
 
-async function fetchMembers(groupId) {
+async function fetchGroup(groupID) {
   try {
-    const fetchUrl = `${apiUrl}/api/Members/ByGroup/${groupId}`;
+    const fetchUrl = `${apiUrl}/api/Groups/${groupID}`;
     const response = await fetch(fetchUrl);
     if (!response.ok) {
-      throw error("Failed to fetch members by their group id");
+      throw error(`Failed to fetch group by groupId: ${groupID}`);
     }
-    const members = await response.json();
+    const group = await response.json();
 
-    return members;
+    return group;
   } catch (error) {
     conmsole.log(error);
   }
