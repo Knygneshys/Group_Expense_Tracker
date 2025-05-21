@@ -50,8 +50,7 @@ function fetchSettleButton(member, setRefresh, goToTransaction) {
 }
 
 async function settleDebt(member, goToTransaction) {
-  console.log(member);
-  goToTransaction(member.id, member.groupId);
+  goToTransaction(member.groupId, member.id);
 }
 
 async function removeMember(id) {

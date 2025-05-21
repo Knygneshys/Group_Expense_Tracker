@@ -15,11 +15,13 @@ const Transaction = () => {
   const recipientPaymentsRef = useRef(null);
 
   const groupId = params.groupId;
+  const memberId = params.memberId;
+
   const splitTypes = ["D", "E", "P"];
 
   useEffect(() => {
-    getData(setMembers, setGroup, groupId);
-    setPayerId(params.memberId);
+    getData(setMembers, setGroup, groupId, setAmount, memberId);
+    setPayerId(0);
   }, []);
 
   const navigate = useNavigate();
@@ -39,7 +41,6 @@ const Transaction = () => {
         recipients: recipientPaymentsRef.current.getPayments(),
       };
 
-      console.log(transaction);
       await postTransaction(transaction);
       goToGroup();
     }
@@ -100,7 +101,7 @@ const Transaction = () => {
   return <h1>Loading...</h1>;
 };
 
-async function getData(setMembers, setGroup, groupId) {
+async function getData(setMembers, setGroup, groupId, setAmount, memberId) {
   const fetchedGroup = await fetchGroup(groupId);
   setGroup(fetchedGroup);
   const user = {
@@ -111,6 +112,9 @@ async function getData(setMembers, setGroup, groupId) {
     groupId: 0,
   };
   const members = [user, ...fetchedGroup.members];
+  console.log(members);
+  const amount = members.find((m) => m.id == memberId).debt;
+  setAmount(amount);
   setMembers(members);
 }
 
