@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 
-const TransactionRecipientsList = ({ recipients }) => {
-  const [payments, setPayments] = useState();
+const TransactionRecipientsList = forwardRef(({ recipients }, ref) => {
+  const [payments, setPayments] = useState([]);
 
   useEffect(() => {
     const initialPayments = recipients.map((r) => ({
@@ -11,12 +16,17 @@ const TransactionRecipientsList = ({ recipients }) => {
     setPayments(initialPayments);
   }, [recipients]);
 
+  useImperativeHandle(ref, () => ({
+    getPayments: () => payments,
+  }));
+
   const handlePaymentChange = (index, amount) => {
     const newPayments = [...payments];
     newPayments[index].amount = amount;
     setPayments(newPayments);
 
     console.log(payments);
+    ref = payments;
   };
 
   const list = recipients.map((r, index) => (
@@ -27,7 +37,6 @@ const TransactionRecipientsList = ({ recipients }) => {
       <input
         name="amount"
         type="number"
-        required
         min={0}
         placeholder="0"
         onChange={(e) =>
@@ -38,6 +47,6 @@ const TransactionRecipientsList = ({ recipients }) => {
   ));
 
   return list;
-};
+});
 
 export default TransactionRecipientsList;

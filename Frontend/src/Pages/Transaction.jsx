@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import TransactionRecipientsList from "../Lists/TransactionRecipientsList";
 import Dropdown from "../Components/Dropdown/Dropdown";
@@ -10,6 +10,8 @@ const Transaction = () => {
   const [members, setMembers] = useState([]);
   const [group, setGroup] = useState();
   const [splitType, setSplitType] = useState("D");
+  const [amount, setAmount] = useState(0);
+  const recipientPaymentsRef = useRef(null);
 
   const groupId = params.groupId;
   const splitTypes = ["Dynamic", "Equal", "Percentage"];
@@ -22,20 +24,45 @@ const Transaction = () => {
     console.log(splitType);
   }, [splitType]);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("PAVYKO!");
+    const transaction = {
+      groupId: groupId,
+      senderId: params.memberId,
+      amount: amount,
+      splitType: splitType,
+      recipients: recipientPaymentsRef.current.getPayments(),
+    };
+
+    console.log(transaction);
+  }
+
   if (group !== undefined) {
     return (
       <>
         <h1>New Transaction in {group.name}</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label>Payment amount: </label>
-            <input type="number" min="0" placeholder="0" required></input>
+            <input
+              name="amount"
+              type="number"
+              min="0"
+              placeholder="0"
+              value={amount}
+              onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
+              required
+            ></input>
             <br />
             <label>Split type: </label>
             <Dropdown items={splitTypes} setSelectedValue={setSplitType} />
           </div>
           <div>
-            <TransactionRecipientsList recipients={members} />
+            <TransactionRecipientsList
+              recipients={members}
+              ref={recipientPaymentsRef}
+            />
           </div>
           <button type="submit">Make Transaction</button>
         </form>
