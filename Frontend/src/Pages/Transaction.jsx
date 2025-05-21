@@ -10,7 +10,6 @@ const Transaction = () => {
   const [members, setMembers] = useState([]);
   const [group, setGroup] = useState();
   const [splitType, setSplitType] = useState("D");
-  const [paymentAmount, setPaymentAmount] = useState(0);
 
   const groupId = params.groupId;
   const splitTypes = ["Dynamic", "Equal", "Percentage"];
@@ -21,7 +20,6 @@ const Transaction = () => {
 
   useEffect(() => {
     console.log(splitType);
-    console.log(paymentAmount);
   }, [splitType]);
 
   if (group !== undefined) {
