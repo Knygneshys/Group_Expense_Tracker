@@ -45,6 +45,7 @@ const Transaction = () => {
     const memberNameList = members.map((mem) => `${mem.name} ${mem.surname}`);
     const displayedValues = [`You`, ...memberNameList];
     const displayedSplitTypes = ["Dynamic", "Equal", "Percentage"];
+
     return (
       <>
         <h1>New Transaction in {group.name}</h1>
@@ -78,6 +79,7 @@ const Transaction = () => {
           </div>
           <div>
             <TransactionRecipientsList
+              key={`${payerId}-${splitType}`}
               recipients={members}
               ref={recipientPaymentsRef}
               payerId={payerId}

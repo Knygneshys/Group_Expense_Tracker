@@ -64,7 +64,7 @@ namespace Backend.Data.Repositories
 
         public async Task<List<Transaction>?> GetAllFromGroup(int groupId)
         {
-            return await _context.Transactions.Where(t => t.GroupId == groupId).ToListAsync();
+            return await _context.Transactions.Where(t => t.GroupId == groupId).Include(t => t.Recipients).ToListAsync();
         }
     }
 }

@@ -17,10 +17,10 @@ const TransactionRecipientsList = forwardRef(
     useEffect(() => {
       const initialPayments = recipients.map((r) => ({
         recipientId: r.id,
-        amount: 0,
+        payment: 0,
       }));
       setPayments(initialPayments);
-    }, [recipients]);
+    }, [recipients, payerId]);
 
     useImperativeHandle(ref, () => ({
       getPayments: () => payments,
@@ -28,7 +28,7 @@ const TransactionRecipientsList = forwardRef(
 
     const handlePaymentChange = (index, amount) => {
       const newPayments = [...payments];
-      newPayments[index].amount = amount;
+      newPayments[index].payment = amount;
       setPayments(newPayments);
 
       console.log(payments);

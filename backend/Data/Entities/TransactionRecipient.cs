@@ -12,7 +12,6 @@ namespace Backend.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        // public int TransactionId { get; set; }
         public int RecipientId { get; set; }
         public decimal Payment { get; set; } = 0;
         public int TransactionId { get; set; }
