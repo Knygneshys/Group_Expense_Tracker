@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import TransactionRecipientsList from "../Lists/TransactionRecipientsList";
 import Dropdown from "../Components/Dropdown/Dropdown";
@@ -11,6 +11,7 @@ const Transaction = () => {
   const [group, setGroup] = useState();
   const [splitType, setSplitType] = useState("D");
   const [amount, setAmount] = useState(0);
+  const [payerId, setPayerId] = useState(0);
   const recipientPaymentsRef = useRef(null);
 
   const groupId = params.groupId;
@@ -18,6 +19,7 @@ const Transaction = () => {
 
   useEffect(() => {
     getData(setMembers, setGroup, groupId);
+    setPayerId(params.memberId);
   }, []);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const Transaction = () => {
     console.log("PAVYKO!");
     const transaction = {
       groupId: groupId,
-      senderId: params.memberId,
+      senderId: payerId,
       amount: amount,
       splitType: splitType,
       recipients: recipientPaymentsRef.current.getPayments(),
@@ -38,18 +40,24 @@ const Transaction = () => {
     console.log(transaction);
   }
 
-  if (group !== undefined) {
+  if (group !== undefined && members.length > 0) {
+    const list = members.map((mem) => mem.id);
+    const memberIds = [0, ...list];
+
     return (
       <>
         <h1>New Transaction in {group.name}</h1>
         <form onSubmit={handleSubmit}>
           <div>
+            <label>Sender:</label>
+            <Dropdown items={memberIds} setSelectedValue={setPayerId} />
             <label>Payment amount: </label>
             <input
               name="amount"
               type="number"
-              min="0"
-              placeholder="0"
+              step={0.01}
+              min={0}
+              placeholder={0}
               value={amount}
               onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
               required
@@ -68,8 +76,9 @@ const Transaction = () => {
         </form>
       </>
     );
+  } else if (group !== undefined && members.length <= 0) {
+    return <h3>The group is empty. Please add some members first.</h3>;
   }
-
   return <h1>Loading...</h1>;
 };
 
