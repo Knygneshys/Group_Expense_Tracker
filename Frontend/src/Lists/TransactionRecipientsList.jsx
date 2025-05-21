@@ -13,12 +13,12 @@ const EURO = import.meta.env.VITE_EURO;
 const TransactionRecipientsList = forwardRef(
   ({ recipients, payerId, splitType }, ref) => {
     const [payments, setPayments] = useState([]);
-    let filteredRecipients;
+    const [filteredRecipients, setFilteredRecipients] = useState([]);
+
     useEffect(() => {
-      filteredRecipients = recipients.filter((r) => r.id != payerId);
-      console.log(payerId);
-      console.log(filteredRecipients);
-      const initialPayments = recipients.map((r) => ({
+      const filtered = recipients.filter((r) => r.id != payerId);
+      setFilteredRecipients(filtered);
+      const initialPayments = filtered.map((r) => ({
         recipientId: r.id,
         payment: 0,
       }));
@@ -33,8 +33,6 @@ const TransactionRecipientsList = forwardRef(
       const newPayments = [...payments];
       newPayments[index].payment = amount;
       setPayments(newPayments);
-
-      console.log(payments);
       ref = payments;
     };
 
@@ -43,7 +41,8 @@ const TransactionRecipientsList = forwardRef(
       case "E":
         list = (
           <EqualSplitTypeRecipientList
-            recipients={recipients}
+            recipients={filteredRecipients}
+            allRecipients={recipients}
             payerId={payerId}
           />
         );
@@ -51,7 +50,8 @@ const TransactionRecipientsList = forwardRef(
       case "P":
         list = (
           <SplitTypeRecipientList
-            recipients={recipients}
+            recipients={filteredRecipients}
+            allRecipients={recipients}
             placeholder={`% of the payment amount`}
             handleValueChange={handlePaymentChange}
             payerId={payerId}
@@ -61,7 +61,8 @@ const TransactionRecipientsList = forwardRef(
       default:
         list = (
           <SplitTypeRecipientList
-            recipients={recipients}
+            recipients={filteredRecipients}
+            allRecipients={recipients}
             placeholder={`0${EURO}`}
             handleValueChange={handlePaymentChange}
             payerId={payerId}

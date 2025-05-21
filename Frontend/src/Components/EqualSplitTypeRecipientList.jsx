@@ -2,8 +2,12 @@ import React from "react";
 
 const EURO = import.meta.env.VITE_EURO;
 
-const EqualSplitTypeRecipientList = ({ recipients, payerId }) => {
-  const debt = recipients.find((r) => r.id == payerId).debt;
+const EqualSplitTypeRecipientList = ({
+  recipients,
+  allRecipients,
+  payerId,
+}) => {
+  const debt = allRecipients.find((r) => r.id == payerId).debt;
   const filteredRecipients = recipients.filter((r) => r.id != payerId);
 
   const list = filteredRecipients.map((r) => {
