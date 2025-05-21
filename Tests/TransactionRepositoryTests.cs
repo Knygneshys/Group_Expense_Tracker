@@ -188,5 +188,28 @@ namespace Tests
             Assert.Equal(expected, actual.Count);
         }
 
+        [Fact]
+        public async Task CreateAsync_CreatesEqualSplitFromUser_BothMembersShouldHaveIncreasedDebt()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var transRepo = new TransactionRepository(context);
+            var memRepo = new MemberRepository(context);
+            Transaction transaction = new Transaction(2, 0, 100, 'E', new List<TransactionRecipient>
+            {
+                new TransactionRecipient(4, 0),
+                new TransactionRecipient(5, 0),
+            });
+            // Act
+
+            var actual = await transRepo.CreateAsync(transaction);
+
+            // Assert
+            Member recipient4 = await memRepo.FindByIdAsync(4);
+            Member recipient5 = await memRepo.FindByIdAsync(5);
+            Assert.Equal(150m, recipient4.Debt);
+            Assert.Equal(-110m, recipient5.Debt);
+        }
+
     }
 }

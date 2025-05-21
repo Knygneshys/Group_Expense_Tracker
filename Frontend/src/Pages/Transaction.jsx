@@ -1,5 +1,5 @@
 import React, { use, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TransactionRecipientsList from "../Lists/TransactionRecipientsList";
 import Dropdown from "../Components/Dropdown/Dropdown";
 
@@ -22,6 +22,11 @@ const Transaction = () => {
     setPayerId(params.memberId);
   }, []);
 
+  const navigate = useNavigate();
+  const goToGroup = () => {
+    navigate(`/Group/${group.id}`);
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (amount > 0) {
@@ -36,6 +41,7 @@ const Transaction = () => {
 
       console.log(transaction);
       await postTransaction(transaction);
+      goToGroup();
     }
   }
 
