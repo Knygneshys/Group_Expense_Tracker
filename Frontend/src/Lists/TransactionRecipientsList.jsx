@@ -5,7 +5,7 @@ import React, {
   useState,
 } from "react";
 
-const TransactionRecipientsList = forwardRef(({ recipients }, ref) => {
+const TransactionRecipientsList = forwardRef(({ recipients, payerId }, ref) => {
   const [payments, setPayments] = useState([]);
 
   useEffect(() => {
@@ -29,22 +29,28 @@ const TransactionRecipientsList = forwardRef(({ recipients }, ref) => {
     ref = payments;
   };
 
-  const list = recipients.map((r, index) => (
-    <div key={r.id}>
-      <label>
-        {r.name} {r.surname}. Current debt: {r.debt}.
-      </label>
-      <input
-        name="amount"
-        type="number"
-        min={0}
-        placeholder="0"
-        onChange={(e) =>
-          handlePaymentChange(index, parseFloat(e.target.value) || 0)
-        }
-      ></input>
-    </div>
-  ));
+  const list = recipients.map((r, index) => {
+    if (r.id != payerId) {
+      return (
+        <div key={r.id}>
+          <label>
+            {r.name} {r.surname}. Current debt: {r.debt}.
+          </label>
+          <input
+            name="amount"
+            type="number"
+            min={0}
+            placeholder="0"
+            onChange={(e) =>
+              handlePaymentChange(index, parseFloat(e.target.value) || 0)
+            }
+          ></input>
+        </div>
+      );
+    }
+
+    return <></>;
+  });
 
   return list;
 });

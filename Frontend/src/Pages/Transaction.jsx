@@ -26,6 +26,10 @@ const Transaction = () => {
     console.log(splitType);
   }, [splitType]);
 
+  useEffect(() => {
+    console.log(payerId);
+  }, [payerId]);
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log("PAVYKO!");
@@ -58,7 +62,7 @@ const Transaction = () => {
               displayedValues={displayedValues}
             />
             <br />
-            <label>Payment amount: </label>
+            <label>Payment amount:</label>
             <input
               name="amount"
               type="number"
@@ -70,7 +74,7 @@ const Transaction = () => {
               required
             ></input>
             <br />
-            <label>Split type: </label>
+            <label>Split type:</label>
             <Dropdown
               items={splitTypes}
               setSelectedValue={setSplitType}
@@ -81,6 +85,7 @@ const Transaction = () => {
             <TransactionRecipientsList
               recipients={members}
               ref={recipientPaymentsRef}
+              payerId={payerId}
             />
           </div>
           <button type="submit">Make Transaction</button>
