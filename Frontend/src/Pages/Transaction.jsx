@@ -9,26 +9,38 @@ const Transaction = () => {
   const params = useParams();
   const [members, setMembers] = useState([]);
   const [group, setGroup] = useState();
+  const [splitType, setSplitType] = useState("D");
+  const [paymentAmount, setPaymentAmount] = useState(0);
+
   const groupId = params.groupId;
-  const splitTypes = ["D", "E", "P"];
+  const splitTypes = ["Dynamic", "Equal", "Percentage"];
+
   useEffect(() => {
     getData(setMembers, setGroup, groupId);
   }, []);
+
+  useEffect(() => {
+    console.log(splitType);
+    console.log(paymentAmount);
+  }, [splitType]);
 
   if (group !== undefined) {
     return (
       <>
         <h1>New Transaction in {group.name}</h1>
-        <div>
-          <label>Payment amount: </label>
-          <input type="number" min="0" placeholder="0" required></input>
-          <br />
-          <label>Split type: </label>
-          <Dropdown items={splitTypes} />
-        </div>
-        <div>
-          <TransactionRecipientsList />
-        </div>
+        <form>
+          <div>
+            <label>Payment amount: </label>
+            <input type="number" min="0" placeholder="0" required></input>
+            <br />
+            <label>Split type: </label>
+            <Dropdown items={splitTypes} setSelectedValue={setSplitType} />
+          </div>
+          <div>
+            <TransactionRecipientsList recipients={members} />
+          </div>
+          <button type="submit">Make Transaction</button>
+        </form>
       </>
     );
   }

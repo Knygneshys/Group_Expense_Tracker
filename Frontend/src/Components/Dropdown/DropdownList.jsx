@@ -1,6 +1,6 @@
 import React from "react";
 
 export const DropdownList = ({ items }) => {
-  const list = items.map((i, index) => <option key={index}>{i}</option>);
+  const list = items.map((i) => <option key={i}>{i}</option>);
   return list;
 };
