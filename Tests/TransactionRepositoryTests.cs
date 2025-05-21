@@ -155,7 +155,7 @@ namespace Tests
             using var context = CreateContext();
             var transRepo = new TransactionRepository(context);
             var memRepo = new MemberRepository(context);
-            Transaction transaction = new Transaction(2, 0, 100, 'P', new List<TransactionRecipient>
+            Transaction transaction = new Transaction(2, 3, 100, 'P', new List<TransactionRecipient>
             {
                 new TransactionRecipient(4, 40),
                 new TransactionRecipient(5, 60),

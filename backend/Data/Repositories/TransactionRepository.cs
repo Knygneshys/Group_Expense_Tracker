@@ -28,8 +28,8 @@ namespace Backend.Data.Repositories
                     }
                     break;
                 case ('P'):
-                    if(transaction.Recipients.Sum(rt => rt.Payment) != 100) { return null; }
-                    foreach(TransactionRecipient recipient in transaction.Recipients)
+                    if (transaction.Recipients.Sum(rt => rt.Payment) != 100) { return null; }
+                    foreach (TransactionRecipient recipient in transaction.Recipients)
                     {
                         amount = transaction.Amount * recipient.Payment / 100;
                         await ReadjustDebt(recipient.RecipientId, amount, transaction.SenderId);
@@ -54,12 +54,27 @@ namespace Backend.Data.Repositories
         private async Task ReadjustDebt(int recipientId, decimal amount, int senderId)
         {
             Member? member = await _context.Members.FindAsync(recipientId);
-            if (member != null && member.Id != senderId && member.Debt < 0)
+            if (member != null && senderId == 0)
+            {
+                member.Debt += amount;
+                await _context.SaveChangesAsync();
+            }
+            else if (member != null && recipientId != senderId && member.Debt < 0)
             {
                 member.Debt += amount;
                 if (member.Debt > 0) { member.Debt = 0; }
                 await _context.SaveChangesAsync();
             }
+            else if (senderId != 0 && recipientId == 0) // if members sent money to the user
+            {
+                Member? m = await _context.Members.FindAsync(senderId);
+                if (m != null)
+                {
+                    m.Debt -= amount;
+                }
+                await _context.SaveChangesAsync();
+            }
+
         }
 
 
