@@ -35,7 +35,7 @@ const Transaction = () => {
       };
 
       console.log(transaction);
-      await postTransaction(transaction);
+      // await postTransaction(transaction);
     }
   }
 

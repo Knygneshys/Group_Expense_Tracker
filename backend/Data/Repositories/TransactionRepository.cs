@@ -33,6 +33,7 @@ namespace Backend.Data.Repositories
                     {
                         amount = transaction.Amount * recipient.Payment / 100;
                         await ReadjustDebt(recipient.RecipientId, amount, transaction.SenderId);
+                        recipient.Payment = amount;
                     }
                     break;
                 case ('D'):

@@ -14,6 +14,8 @@ const TransactionRecipientsList = forwardRef(
   ({ recipients, payerId, splitType }, ref) => {
     const [payments, setPayments] = useState([]);
 
+    // const filteredRecipients = recipients.filter(r => id !== payerId);
+
     useEffect(() => {
       const initialPayments = recipients.map((r) => ({
         recipientId: r.id,
