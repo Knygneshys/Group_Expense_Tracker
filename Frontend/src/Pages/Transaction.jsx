@@ -15,20 +15,12 @@ const Transaction = () => {
   const recipientPaymentsRef = useRef(null);
 
   const groupId = params.groupId;
-  const splitTypes = ["Dynamic", "Equal", "Percentage"];
+  const splitTypes = ["D", "E", "P"];
 
   useEffect(() => {
     getData(setMembers, setGroup, groupId);
     setPayerId(params.memberId);
   }, []);
-
-  useEffect(() => {
-    console.log(splitType);
-  }, [splitType]);
-
-  useEffect(() => {
-    console.log(payerId);
-  }, [payerId]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -49,7 +41,7 @@ const Transaction = () => {
     const memberIds = [0, ...idList];
     const memberNameList = members.map((mem) => `${mem.name} ${mem.surname}`);
     const displayedValues = [`You`, ...memberNameList];
-
+    const displayedSplitTypes = ["Dynamic", "Equal", "Percentage"];
     return (
       <>
         <h1>New Transaction in {group.name}</h1>
@@ -78,7 +70,7 @@ const Transaction = () => {
             <Dropdown
               items={splitTypes}
               setSelectedValue={setSplitType}
-              displayedValues={splitTypes}
+              displayedValues={displayedSplitTypes}
             />
           </div>
           <div>
@@ -86,6 +78,7 @@ const Transaction = () => {
               recipients={members}
               ref={recipientPaymentsRef}
               payerId={payerId}
+              splitType={splitType}
             />
           </div>
           <button type="submit">Make Transaction</button>
