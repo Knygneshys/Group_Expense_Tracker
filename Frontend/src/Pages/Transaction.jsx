@@ -41,9 +41,7 @@ const Transaction = () => {
 
   if (group !== undefined && members.length > 0) {
     const idList = members.map((mem) => mem.id);
-    const memberIds = [0, ...idList];
     const memberNameList = members.map((mem) => `${mem.name} ${mem.surname}`);
-    const displayedValues = [`You`, ...memberNameList];
     const displayedSplitTypes = ["Dynamic", "Equal", "Percentage"];
 
     return (
@@ -53,9 +51,9 @@ const Transaction = () => {
           <div>
             <label>Sender:</label>
             <Dropdown
-              items={memberIds}
+              items={idList}
               setSelectedValue={setPayerId}
-              displayedValues={displayedValues}
+              displayedValues={memberNameList}
             />
             <br />
             <label>Payment amount:</label>
@@ -99,7 +97,15 @@ const Transaction = () => {
 async function getData(setMembers, setGroup, groupId) {
   const fetchedGroup = await fetchGroup(groupId);
   setGroup(fetchedGroup);
-  setMembers(fetchedGroup.members);
+  const user = {
+    id: 0,
+    name: "Current",
+    surname: "User",
+    debt: 0,
+    groupId: 0,
+  };
+  const members = [user, ...fetchedGroup.members];
+  setMembers(members);
 }
 
 async function fetchGroup(groupID) {
