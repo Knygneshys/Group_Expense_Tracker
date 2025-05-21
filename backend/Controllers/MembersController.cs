@@ -43,7 +43,7 @@ namespace Group_Expense_Tracker.Server.Controllers
         }
 
         // GET
-        [HttpGet("MembersByGroup/{groupId:int}")]
+        [HttpGet("ByGroup/{groupId:int}")]
         public async Task<ActionResult<IEnumerable<Member>>> GetMembersByGroupId(int groupId)
         {
             var members = await _memberRepo.GetAllByGroupId(groupId);
