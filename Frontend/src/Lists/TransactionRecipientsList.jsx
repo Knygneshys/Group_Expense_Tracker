@@ -5,6 +5,10 @@ import React, {
   useState,
 } from "react";
 import EqualSplitTypeRecipientList from "../Components/EqualSplitTypeRecipientList";
+import SplitTypeInput from "../Components/Inputs/SplitTypeInput";
+import SplitTypeRecipientList from "../Components/SplitTypeRecipientList";
+
+const EURO = import.meta.env.VITE_EURO;
 
 const TransactionRecipientsList = forwardRef(
   ({ recipients, payerId, splitType }, ref) => {
@@ -32,36 +36,34 @@ const TransactionRecipientsList = forwardRef(
     };
 
     let list;
-    if (splitType == "E") {
-      list = (
-        <EqualSplitTypeRecipientList
-          recipients={recipients}
-          payerId={payerId}
-        />
-      );
-    } else {
-      list = recipients.map((r, index) => {
-        if (r.id != payerId) {
-          return (
-            <div key={r.id}>
-              <label>
-                {r.name} {r.surname}. Current debt: {r.debt}.
-              </label>
-              <input
-                name="amount"
-                type="number"
-                min={0}
-                placeholder="0"
-                onChange={(e) =>
-                  handlePaymentChange(index, parseFloat(e.target.value) || 0)
-                }
-              ></input>
-            </div>
-          );
-        }
-
-        return <div key={r.id}></div>; // returns empty fragment when one of the group's members is initiating the payment
-      });
+    switch (splitType) {
+      case "E":
+        list = (
+          <EqualSplitTypeRecipientList
+            recipients={recipients}
+            payerId={payerId}
+          />
+        );
+        break;
+      case "P":
+        list = (
+          <SplitTypeRecipientList
+            recipients={recipients}
+            placeholder={`% of the payment amount`}
+            handleValueChange={handlePaymentChange}
+            payerId={payerId}
+          />
+        );
+        break;
+      default:
+        list = (
+          <SplitTypeRecipientList
+            recipients={recipients}
+            placeholder={`0${EURO}`}
+            handleValueChange={handlePaymentChange}
+            payerId={payerId}
+          />
+        );
     }
 
     return list;
