@@ -3,14 +3,15 @@ import React from "react";
 const EURO = import.meta.env.VITE_EURO;
 
 const EqualSplitTypeRecipientList = ({ recipients, payerId }) => {
+  const debt = recipients.find((r) => r.id == payerId).debt;
   const filteredRecipients = recipients.filter((r) => r.id != payerId);
 
   const list = filteredRecipients.map((r) => {
     if (r.id == 0 && payerId != 0) {
       const message =
-        r.debt > 0
-          ? `User (you). Member owes you ${r.debt}${EURO}`
-          : `User (you). In debt to member for: ${r.debt}${EURO}`;
+        debt > 0
+          ? `User (you). Member owes you ${debt}${EURO}`
+          : `User (you). In debt to member for: ${debt}${EURO}`;
       return <div key={r.id}>{message}</div>;
     }
 
