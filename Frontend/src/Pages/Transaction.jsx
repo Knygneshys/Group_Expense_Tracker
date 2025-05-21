@@ -57,6 +57,7 @@ const Transaction = () => {
               setSelectedValue={setPayerId}
               displayedValues={displayedValues}
             />
+            <br />
             <label>Payment amount: </label>
             <input
               name="amount"
