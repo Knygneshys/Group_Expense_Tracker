@@ -123,5 +123,23 @@ namespace Tests
             List<Group> groups = await groupRepo.GetAll();
             Assert.False(groups[0].Members.Contains(member));
         }
+
+        [Fact]
+        public async Task GetAllByGroupID_GetAllMembersFromGroup2()
+        {
+            // Arrange
+            using var context = CreateContext();
+            var memberRepo = new MemberRepository(context);
+            int groupId = 2;
+            Member mem1 = new Member(4, "Mike", "Brown", 100.0m, 2);
+            Member mem2 = new Member(5, "Sarah", "Wilson", -60.0m, 2);
+            // Act
+            var members = await memberRepo.GetAllByGroupId(groupId);
+
+            // Assert
+            Assert.Equal(2, members.Count);
+            Assert.True(members.Contains(mem1));
+            Assert.True(members.Contains(mem2));
+        }
     }
 }

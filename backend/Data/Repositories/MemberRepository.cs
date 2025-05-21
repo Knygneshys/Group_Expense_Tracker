@@ -30,6 +30,11 @@ namespace backend.Data.Repositories
             return await _context.Members.Where(mem => mem.isDeleted == false).ToListAsync();
         }
 
+        public async Task<List<Member>> GetAllByGroupId(int groupId)
+        {
+            return await _context.Members.Where(mem => mem.GroupId == groupId && mem.isDeleted == false).ToListAsync();
+        }
+
         public bool MemberExists(int id)
         {
             return _context.Members.Any(e => e.Id == id && e.isDeleted == false);

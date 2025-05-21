@@ -5,9 +5,12 @@ const Transaction = () => {
   const params = useParams();
 
   return (
-    <div>
-      {params.groupId} and {params.memberId}
-    </div>
+    <>
+      <h1>New Transaction</h1>
+      <div>
+        {params.groupId} and {params.memberId}
+      </div>
+    </>
   );
 };
 

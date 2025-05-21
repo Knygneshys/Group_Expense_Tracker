@@ -42,6 +42,16 @@ namespace Group_Expense_Tracker.Server.Controllers
             return member;
         }
 
+        // GET
+        [HttpGet("MembersByGroup/{groupId:int}")]
+        public async Task<ActionResult<IEnumerable<Member>>> GetMembersByGroupId(int groupId)
+        {
+            var members = await _memberRepo.GetAllByGroupId(groupId);
+            if(members == null) { return NotFound(); }
+
+            return members;
+        }
+
         // PUT: api/Members/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id:int}")]

@@ -10,5 +10,6 @@ namespace backend.Data.Interfaces
         Task<Member> CreateAsync( Member member);
         bool MemberExists(int id);
         Task<Member?> UpdateAsync(int id, Member member);
+        Task<List<Member>> GetAllByGroupId(int groupId);
     }
 }
