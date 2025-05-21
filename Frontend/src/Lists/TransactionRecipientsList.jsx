@@ -13,10 +13,11 @@ const EURO = import.meta.env.VITE_EURO;
 const TransactionRecipientsList = forwardRef(
   ({ recipients, payerId, splitType }, ref) => {
     const [payments, setPayments] = useState([]);
-
-    // const filteredRecipients = recipients.filter(r => id !== payerId);
-
+    let filteredRecipients;
     useEffect(() => {
+      filteredRecipients = recipients.filter((r) => r.id != payerId);
+      console.log(payerId);
+      console.log(filteredRecipients);
       const initialPayments = recipients.map((r) => ({
         recipientId: r.id,
         payment: 0,
