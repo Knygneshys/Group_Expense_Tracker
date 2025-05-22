@@ -4,7 +4,7 @@ const EURO = import.meta.env.VITE_EURO;
 
 const RecipientList = ({ recipients, members }) => {
   const list = recipients.map((r) => {
-    const mem = members.find((m) => m.id == r.id);
+    const mem = members.find((m) => m.id == r.recipientId);
     let memName, memSurname;
     if (mem == null) {
       memName = "Current";

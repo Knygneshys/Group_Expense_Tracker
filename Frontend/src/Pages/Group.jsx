@@ -50,6 +50,7 @@ const Group = () => {
         }
         const fetchedDebt = await fetchDebt(groupId);
         const fetchedTransactions = await fetchTransactions(groupId);
+        console.log(fetchedTransactions);
         setTransactions(fetchedTransactions);
         setGroup(fetchedGroup);
         setDebt(fetchedDebt);
