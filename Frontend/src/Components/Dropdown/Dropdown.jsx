@@ -5,7 +5,7 @@ const Dropdown = ({ items, setSelectedValue, displayedValues }) => {
   return (
     <select
       style={{ marginLeft: "7px" }}
-      class="btn btn-secondary btn-sm dropdown-toggle"
+      className="btn btn-secondary btn-sm dropdown-toggle"
       onChange={(e) => {
         setSelectedValue(e.target.value);
       }}

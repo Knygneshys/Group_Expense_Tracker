@@ -11,8 +11,8 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<AllGroups />} />
-        <Route path="/GroupList" element={<AllGroups />} />
+        <Route index="/GroupList/0" element={<AllGroups />} />
+        <Route path="/GroupList/:pageNr" element={<AllGroups />} />
         <Route path="/Group/:id" element={<Group />} />
         <Route
           path="/Transaction/:groupId/:memberId"

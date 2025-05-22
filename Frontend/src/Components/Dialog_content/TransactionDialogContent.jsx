@@ -14,12 +14,12 @@ const TransactionDialogContent = forwardRef(
         <div className="d-flex justify-content-between align-items-center mb-3">
           <div></div>
           <h3 className="mb-0">Group's transactions</h3>
-          <button onClick={toggleDialog} class="btn btn-primary">
+          <button onClick={toggleDialog} className="btn btn-primary">
             Close
           </button>
         </div>
         {transactionList}
-        <button onClick={toggleDialog} class="btn btn-primary">
+        <button onClick={toggleDialog} className="btn btn-primary">
           Close
         </button>
       </>

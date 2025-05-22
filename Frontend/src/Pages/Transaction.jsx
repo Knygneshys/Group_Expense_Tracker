@@ -55,8 +55,8 @@ const Transaction = () => {
     return (
       <>
         <Header />
-        <div class="pageContent">
-          <h1 class="groupHeader">New Transaction in {group.name}</h1>
+        <div className="pageContent">
+          <h1 className="groupHeader">New Transaction in {group.name}</h1>
           <form onSubmit={handleSubmit}>
             <div className="firstHalfOfForm">
               <label style={{ fontSize: fontSizePt }}>Sender:</label>
@@ -68,7 +68,7 @@ const Transaction = () => {
               <br />
               <label style={{ fontSize: fontSizePt }}>Payment amount:</label>
               <input
-                class="form-control"
+                className="form-control"
                 name="amount"
                 type="number"
                 step={0.01}
@@ -97,7 +97,7 @@ const Transaction = () => {
             </div>
             <button
               type="submit"
-              class="btn btn-success"
+              className="btn btn-success"
               style={{ marginTop: "10px" }}
             >
               Make Transaction
@@ -110,7 +110,7 @@ const Transaction = () => {
     return (
       <>
         <Header />
-        <h3 class="pageContent">
+        <h3 className="pageContent">
           The group is empty. Please add some members first.
         </h3>
       </>
@@ -119,7 +119,7 @@ const Transaction = () => {
   return (
     <>
       <Header />
-      <h1 class="pageContent">Loading...</h1>
+      <h1 className="pageContent">Loading...</h1>
     </>
   );
 };

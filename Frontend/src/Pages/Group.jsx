@@ -122,7 +122,7 @@ const Group = () => {
     return (
       <>
         <Header />
-        <h1 class="pageContent">Loading...</h1>
+        <h1 className="pageContent">Loading...</h1>
       </>
     );
   }

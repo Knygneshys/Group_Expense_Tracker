@@ -5,7 +5,7 @@ import NewGroupAddition from "../Components/NewGroupInserter";
 const apiUrl = import.meta.env.VITE_API_URL;
 const EURO = import.meta.env.VITE_EURO;
 
-const GroupList = () => {
+const GroupList = ({ pageNr }) => {
   const [groups, setGroups] = useState("empty");
   const [groupDebts, setGroupDebts] = useState("empty");
   const [refresh, setRefresh] = useState(0);
@@ -14,7 +14,10 @@ const GroupList = () => {
     async function getData() {
       setGroups("empty");
       setGroupDebts("empty");
-      const data = await fetchGroups();
+      const data = await fetchGroups(pageNr);
+      if (data.length <= 0) {
+        goBackAPage(pageNr);
+      }
       setGroups(data);
 
       if (data && Array.isArray(data)) {
@@ -34,6 +37,10 @@ const GroupList = () => {
 
   const goToGroup = (groupId) => {
     navigate(`/Group/${groupId}`);
+  };
+
+  const goBackAPage = (pageNr) => {
+    navigate(`/GroupList/${--pageNr}`);
   };
 
   if (groups != "empty" && groupDebts != "empty") {
@@ -71,9 +78,9 @@ const GroupList = () => {
   return <div>Loading...</div>;
 };
 
-async function fetchGroups() {
+async function fetchGroups(pageNr) {
   try {
-    const response = await fetch(`${apiUrl}/api/Groups`);
+    const response = await fetch(`${apiUrl}/api/Groups/Page/${pageNr}`);
 
     if (!response.ok) {
       throw new Error("Could not fetch groups");

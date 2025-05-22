@@ -1,5 +1,6 @@
 ﻿using backend.Data.Entities;
 using backend.Data.Interfaces;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data.Repositories
@@ -38,6 +39,20 @@ namespace backend.Data.Repositories
             foreach(Group group in groups)
             {
                 group.Members = group.Members.Where(mem => mem.isDeleted == false).ToList();
+            }
+
+            return groups;
+        }
+
+        public async Task<List<Group>> GetGroupsFromPage(int pageNr)
+        {
+            const int groupCountInPage = 9;
+
+            List<Group> groups = await _context.Groups.Skip(groupCountInPage * pageNr).Take(groupCountInPage).ToListAsync();
+
+            if(groups == null)
+            {
+                return null;
             }
 
             return groups;

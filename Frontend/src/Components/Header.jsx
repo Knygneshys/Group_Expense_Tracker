@@ -6,7 +6,7 @@ export const Header = () => {
   return (
     <div className="customHeader">
       <h1 className="mainHeader">Group Finance Tracker</h1>
-      <NavLink to="/GroupList" className="groupLink">
+      <NavLink to="/GroupList/0" className="groupLink">
         Go to groups
       </NavLink>
     </div>
