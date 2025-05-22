@@ -1,0 +1,18 @@
+.pageContent{
+  background-color: #F2F2F2;
+  text-align: center;
+  height: 88vh
+}
+
+.groupHeader{
+  padding: 10px;
+}
+
+.listDiv{
+  width: 60%;
+  margin:auto;
+}
+
+table, tr, td{
+    font-size: 15pt;
+}

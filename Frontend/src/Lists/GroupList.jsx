@@ -45,7 +45,9 @@ const GroupList = () => {
           {EURO}
         </td>
         <td>
-          <button onClick={() => goToGroup(group.id)}>Open</button>
+          <button onClick={() => goToGroup(group.id)} className="btn btn-link">
+            Open
+          </button>
         </td>
       </tr>
     ));
@@ -56,6 +58,7 @@ const GroupList = () => {
             <tr>
               <th>Name</th>
               <th>Debt</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>{list}</tbody>

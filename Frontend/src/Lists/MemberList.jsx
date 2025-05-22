@@ -16,12 +16,13 @@ const MemberList = ({ members, setRefresh, goToTransaction }) => {
     ));
 
     return (
-      <table>
+      <table className="table table-striped table-hover table-bordered">
         <thead>
           <tr>
             <th>Name</th>
             <th>Surname</th>
             <th>Debt</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>{list}</tbody>
@@ -35,7 +36,10 @@ const MemberList = ({ members, setRefresh, goToTransaction }) => {
 function fetchSettleButton(member, setRefresh, goToTransaction) {
   if (member.debt === null || member.debt != 0) {
     return (
-      <button onClick={() => settleDebt(member, goToTransaction)}>
+      <button
+        onClick={() => settleDebt(member, goToTransaction)}
+        className="btn btn-light"
+      >
         Settle
       </button>
     );
@@ -43,6 +47,7 @@ function fetchSettleButton(member, setRefresh, goToTransaction) {
 
   return (
     <button
+      className="btn btn-warning"
       onClick={async () => {
         await removeMember(member.id);
         setRefresh((x) => x + 1);

@@ -1,6 +1,6 @@
 .customHeader{
     background-color: #EAE4D5;
-    height: 150px;
+    height: 12vh;
     text-align: center;
     font-family: 'Roboto', sans-serif;
     border: 3px solid black;
@@ -12,6 +12,6 @@
 }
 
 .mainHeader{
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     padding-top: 10px;
 }

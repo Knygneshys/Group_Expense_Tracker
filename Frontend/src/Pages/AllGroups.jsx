@@ -11,8 +11,10 @@ const AllGroups = () => {
     <>
       <Header />
       <div className="pageContent">
-        <h1>Groups</h1>
-        <GroupList />
+        <h1 className="groupHeader">Groups</h1>
+        <div className="listDiv">
+          <GroupList />
+        </div>
       </div>
     </>
   );

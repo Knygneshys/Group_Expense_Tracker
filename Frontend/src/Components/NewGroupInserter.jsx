@@ -27,11 +27,23 @@ const NewGroupAddition = ({ refreshDad }) => {
 
   return (
     <form action={createNewGroup}>
-      <label>
-        New group's name:{" "}
-        <input name="groupName" required type="text" placeholder="Group name" />
+      <label className="form-label" style={{ fontSize: "13pt" }}>
+        New group's name:
+        <input
+          name="groupName"
+          required
+          type="text"
+          placeholder="Group name"
+          className="form-control"
+        />
       </label>
-      <button type="submit">Create new group</button>
+      <button
+        type="submit"
+        className="btn btn-primary"
+        style={{ margin: "10px" }}
+      >
+        Create new group
+      </button>
     </form>
   );
 };

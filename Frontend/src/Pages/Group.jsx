@@ -4,7 +4,7 @@ import MemberList from "../Lists/MemberList";
 import MemberDialogContent from "../Components/Dialog_content/MemberDialogContent";
 import TransactionDialogContent from "../Components/Dialog_content/TransactionDialogContent";
 import { Header } from "../Components/Header";
-
+import "./Css/Group.css";
 const apiUrl = import.meta.env.VITE_API_URL;
 const EURO = import.meta.env.VITE_EURO;
 
@@ -68,29 +68,38 @@ const Group = () => {
   }
 
   if (group !== null) {
+    const buttonMargins = "15px";
     return (
       <>
         <Header />
-        <div>
-          <h1>{group.name}</h1>
+        <div className="pageContent">
+          <h1 className="groupHeader">{group.name}</h1>
           <h3>
             Current group debt: {debt.toFixed(2)}
             {EURO}
           </h3>
-          <MemberList
-            members={members}
-            setRefresh={setRefresh}
-            goToTransaction={goToTransaction}
-          />
-          <button onClick={toggleMemDialog}>Add new member</button>
+          <div className="listDiv">
+            <MemberList
+              members={members}
+              setRefresh={setRefresh}
+              goToTransaction={goToTransaction}
+            />
+          </div>
+          <button onClick={toggleMemDialog} className="btn btn-primary">
+            Add new member
+          </button>
           <button
+            className="btn btn-success"
+            style={{ marginLeft: buttonMargins, marginRight: buttonMargins }}
             onClick={() => {
               goToTransaction(groupId, 0);
             }}
           >
             Make transaction
           </button>
-          <button onClick={toggleTransactionDialog}>Show transactions</button>
+          <button onClick={toggleTransactionDialog} className="btn btn-info">
+            Show transactions
+          </button>
           <dialog ref={memDialogRef}>
             <MemberDialogContent
               toggleDialog={toggleMemDialog}
