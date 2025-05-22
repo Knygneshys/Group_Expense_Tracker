@@ -27,7 +27,7 @@ const RecipientList = ({ recipients, members }) => {
 
   if (list != null) {
     return (
-      <table class="table table-bordered table-sm">
+      <table className="table table-bordered table-sm">
         <thead>
           <tr>
             <td>

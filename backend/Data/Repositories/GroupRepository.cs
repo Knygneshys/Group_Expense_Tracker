@@ -44,6 +44,13 @@ namespace backend.Data.Repositories
             return groups;
         }
 
+        public async Task<Group> GetGroupWithoutMembers(int id)
+        {
+            var group = await _context.Groups.FirstOrDefaultAsync(i => i.Id == id);
+
+            return group;
+        }
+
         public async Task<List<Group>> GetGroupsFromPage(int pageNr)
         {
             const int groupCountInPage = 9;

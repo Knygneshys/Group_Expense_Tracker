@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export const NavButtons = ({ pageNr, navUrl }) => {
+  pageNr = parseInt(pageNr);
   const margins = "10px";
 
   const navigate = useNavigate();

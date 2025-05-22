@@ -8,6 +8,7 @@ import "./Css/transaction.css";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Transaction = () => {
+  document.title = `Group Finance Tracker`;
   const params = useParams();
   const [members, setMembers] = useState([]);
   const [group, setGroup] = useState();
@@ -28,7 +29,7 @@ const Transaction = () => {
 
   const navigate = useNavigate();
   const goToGroup = () => {
-    navigate(`/Group/${group.id}`);
+    navigate(`/Group/${group.id}/0`);
   };
 
   async function handleSubmit(e) {

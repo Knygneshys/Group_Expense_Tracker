@@ -13,5 +13,6 @@ namespace backend.Data.Interfaces
         Task<Group?> UpdateAsync(int id, Group group);
         Task<decimal> GetGroupDebt(int id);
         Task<List<Group>> GetGroupsFromPage(int pageNr);
+        Task<Group> GetGroupWithoutMembers(int id);
     }
 }

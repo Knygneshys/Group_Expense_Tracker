@@ -4,11 +4,14 @@ import MemberList from "../Lists/MemberList";
 import MemberDialogContent from "../Components/Dialog_content/MemberDialogContent";
 import TransactionDialogContent from "../Components/Dialog_content/TransactionDialogContent";
 import { Header } from "../Components/Header";
+import { NavButtons } from "../Components/NavButtons";
 const apiUrl = import.meta.env.VITE_API_URL;
 const EURO = import.meta.env.VITE_EURO;
 
 const Group = () => {
-  const { id } = useParams();
+  document.title = `Group Finance Tracker`;
+  const params = useParams();
+  const id = params.id;
   const [groupId, setGroupId] = useState();
   const [group, setGroup] = useState(null);
   const [debt, setDebt] = useState(null);
@@ -18,9 +21,17 @@ const Group = () => {
   const memDialogRef = useRef(null);
   const tranasctionDialogRef = useRef(null);
 
+  const { pageNr: pageNrParam } = useParams();
+  const parsedPageNr = parseInt(pageNrParam, 10);
+  const pageNr = Number.isNaN(parsedPageNr) ? 0 : parsedPageNr;
+
   const navigate = useNavigate();
   const goToTransaction = (groupId, memberId = 0) => {
     navigate(`/Transaction/${groupId}/${memberId}`);
+  };
+
+  const goBackAPage = (pageNr) => {
+    navigate(`/Group/${groupId}/${--pageNr}`);
   };
 
   useEffect(() => {
@@ -32,6 +43,11 @@ const Group = () => {
     async function getData() {
       if (Number.isInteger(groupId)) {
         const fetchedGroup = await fetchGroup(groupId);
+        const fetchedMembers = await fetchMembers(groupId, pageNr);
+
+        if (fetchedMembers.length <= 0) {
+          goBackAPage(pageNr);
+        }
         const fetchedDebt = await fetchDebt(groupId);
         const fetchedTransactions = await fetchTransactions(groupId);
         setTransactions(fetchedTransactions);
@@ -39,14 +55,14 @@ const Group = () => {
         setDebt(fetchedDebt);
         if (
           fetchedGroup !== null &&
-          JSON.stringify(members) !== JSON.stringify(fetchedGroup.members)
+          JSON.stringify(members) !== JSON.stringify(fetchedMembers)
         ) {
-          setMembers(fetchedGroup.members);
+          setMembers(fetchedMembers);
         }
       }
     }
     getData();
-  }, [groupId, members, refresh]);
+  }, [groupId, members, refresh, pageNr]);
 
   function toggleMemDialog() {
     if (!memDialogRef.current) {
@@ -79,6 +95,7 @@ const Group = () => {
           </h3>
           <div className="listDiv">
             <MemberList
+              key={pageNr}
               members={members}
               setRefresh={setRefresh}
               goToTransaction={goToTransaction}
@@ -115,6 +132,7 @@ const Group = () => {
               ref={tranasctionDialogRef}
             />
           </dialog>
+          <NavButtons pageNr={pageNr} navUrl={`/Group/${id}/`} />
         </div>
       </>
     );
@@ -130,9 +148,23 @@ const Group = () => {
 
 async function fetchGroup(id) {
   try {
-    const response = await fetch(`${apiUrl}/api/Groups/${id}`);
+    const response = await fetch(`${apiUrl}/api/Groups/NoMem/${id}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch group by id: ${id}`);
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function fetchMembers(groupId, pageNr) {
+  try {
+    const response = await fetch(`${apiUrl}/api/Members/${groupId}/${pageNr}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch members from group by id: ${groupId}`);
     }
     const data = await response.json();
 

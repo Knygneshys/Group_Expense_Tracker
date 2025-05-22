@@ -29,6 +29,12 @@ namespace backend.Controllers
             return await _groupRepo.GetAll();
         }
 
+        [HttpGet("NoMem/{id:int}")]
+        public async Task<ActionResult<Group>> GetGroupWithoutMembers(int id)
+        {
+            return await _groupRepo.GetGroupWithoutMembers(id);
+        }
+
         // GET
         [HttpGet("Page/{pageNr:int}")]
         public async Task<ActionResult<List<Group>>> GetGroupsFromPage(int pageNr)

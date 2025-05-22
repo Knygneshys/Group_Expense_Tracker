@@ -36,7 +36,7 @@ const GroupList = ({ pageNr }) => {
   const navigate = useNavigate();
 
   const goToGroup = (groupId) => {
-    navigate(`/Group/${groupId}`);
+    navigate(`/Group/${groupId}/0`);
   };
 
   const goBackAPage = (pageNr) => {

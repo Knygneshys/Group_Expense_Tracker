@@ -12,5 +12,6 @@ namespace backend.Data.Interfaces
         Task<Member?> UpdateAsync(int id, Member member);
         Task<List<Member>> GetAllByGroupId(int groupId);
         Task<List<Member>> GetAllByGroupIdAlongWithDeleted(int groupId);
+        Task<List<Member>> GetGroupMembersFromPage(int groupId, int pageNr);
     }
 }

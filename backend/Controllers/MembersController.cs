@@ -52,6 +52,21 @@ namespace Group_Expense_Tracker.Server.Controllers
             return members;
         }
 
+
+        // GET
+        [HttpGet("{groupId:int}/{pageNr:int}")]
+        public async Task<ActionResult<List<Member>>> GetGroupsFromPage(int groupId, int pageNr)
+        {
+            List<Member> members = await _memberRepo.GetGroupMembersFromPage(groupId, pageNr);
+
+            if (members == null)
+            {
+                return NotFound();
+            }
+
+            return members;
+        }
+
         // GET
         [HttpGet("ByGroup/{groupId:int}")]
         public async Task<ActionResult<IEnumerable<Member>>> GetMembersByGroupId(int groupId)

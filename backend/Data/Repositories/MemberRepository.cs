@@ -30,6 +30,20 @@ namespace backend.Data.Repositories
             return await _context.Members.Where(mem => mem.isDeleted == false).ToListAsync();
         }
 
+        public async Task<List<Member>> GetGroupMembersFromPage(int groupId, int pageNr)
+        {
+            const int memberCountInPage = 8;
+
+            List<Member> members = await _context.Members.Skip(memberCountInPage * pageNr).Take(memberCountInPage).ToListAsync();
+
+            if (members == null)
+            {
+                return null;
+            }
+
+            return members;
+        }
+
         public async Task<List<Member>> GetAllByGroupId(int groupId)
         {
             return await _context.Members.Where(mem => mem.GroupId == groupId && mem.isDeleted == false).ToListAsync();

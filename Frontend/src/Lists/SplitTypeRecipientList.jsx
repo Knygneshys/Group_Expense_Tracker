@@ -26,7 +26,7 @@ const SplitTypeRecipientList = ({
             <label className="form-label">{message}</label>
           </div>
           <div className="col-12 d-flex justify-content-center">
-            <div div style={{ width: "200px" }}>
+            <div style={{ width: "200px" }}>
               <SplitTypeInput
                 handleValueChange={handleValueChange}
                 index={index}
