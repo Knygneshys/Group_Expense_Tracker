@@ -17,12 +17,33 @@ export const TransactionList = ({ transactions }) => {
   if (members !== undefined) {
     const list = transactions.map((t) => {
       console.log(t);
+      let sender;
+      if (t.senderId == 0) {
+        sender = "User";
+      } else {
+        const mem = members.find((m) => m.id == t.senderId);
+        sender = `${mem.name} ${mem.surname}`;
+      }
       return (
         <div key={t.id}>
-          <h4>
-            {t.date} Amount: {t.amount} Split type: {t.splitType} Recipients:{" "}
-            {t.recipients.length}
-          </h4>
+          <table>
+            <thead>
+              <th>Sender</th>
+              <th>Amount</th>
+              <th>Split type</th>
+              <th>Recipient count</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{t.date}</td>
+                <td>
+                  <i>{sender}</i>
+                </td>
+                <td>{t.amount}</td>
+                <td>{t.recipients.length}</td>
+              </tr>
+            </tbody>
+          </table>
           <RecipientList recipients={t.recipients} members={members} />
         </div>
       );
