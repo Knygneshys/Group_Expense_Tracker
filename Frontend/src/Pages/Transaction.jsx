@@ -127,6 +127,7 @@ const Transaction = () => {
 
 async function getData(setMembers, setGroup, groupId, setAmount, memberId) {
   const fetchedGroup = await fetchGroup(groupId);
+  console.log(fetchedGroup);
   setGroup(fetchedGroup);
   const user = {
     id: 0,
@@ -174,7 +175,9 @@ async function postTransaction(transaction) {
     alert("Sucessfully made the transaction!");
   } catch (error) {
     console.log(error);
-    alert("Transaction failed...");
+    alert(
+      "Transaction failed. Make sure that percentages add up to 100% and that (if You are dynamically allocating payments) the sum of payments adds up to the total payment amount!"
+    );
   }
 }
 

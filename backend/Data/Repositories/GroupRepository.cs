@@ -68,7 +68,7 @@ namespace backend.Data.Repositories
         public async Task<decimal> GetGroupDebt(int id)
         {
             return await _context.Members
-                .Where(member => member.GroupId == id)
+                .Where(member => member.GroupId == id && member.isDeleted == false)
                 .SumAsync(member => member.Debt);
         }
 

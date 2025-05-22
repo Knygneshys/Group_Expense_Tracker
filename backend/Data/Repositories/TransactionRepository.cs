@@ -25,6 +25,7 @@ namespace Backend.Data.Repositories
                     foreach (TransactionRecipient recipient in transaction.Recipients)
                     {
                         await ReadjustDebt(recipient.RecipientId, amount, transaction.SenderId);
+                        recipient.Payment = amount;
                     }
                     break;
                 case ('P'):

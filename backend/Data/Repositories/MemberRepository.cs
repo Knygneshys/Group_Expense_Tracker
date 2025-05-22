@@ -34,7 +34,7 @@ namespace backend.Data.Repositories
         {
             const int memberCountInPage = 8;
 
-            List<Member> members = await _context.Members.Skip(memberCountInPage * pageNr).Take(memberCountInPage).ToListAsync();
+            List<Member> members = await _context.Members.Where(mem => mem.GroupId == groupId).Skip(memberCountInPage * pageNr).Take(memberCountInPage).ToListAsync();
 
             if (members == null)
             {
