@@ -32,6 +32,7 @@ namespace Tests
             var group2 = new Group(2, "Darbininkai");
             var group3 = new Group(3, "Bites");
 
+
             var member1 = new Member(1, "John", "Doe", 50.0m, 1);
             member1.Group = group1;
             var member2 = new Member(2, "Alice", "Smith", -25.5m, 1);
@@ -85,7 +86,7 @@ namespace Tests
 
             Assert.NotNull(group);
             Assert.Equal(groupList[0].Name, group.Name);
-            Assert.Equal(memberList.Take(3), group.Members);
+            Assert.Equal(memberList.Take(3).OrderByDescending(mem => mem.Debt), group.Members);
         }
 
         [Fact]
