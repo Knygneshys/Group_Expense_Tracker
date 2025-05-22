@@ -4,9 +4,9 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
-import EqualSplitTypeRecipientList from "../Components/EqualSplitTypeRecipientList";
-import SplitTypeInput from "../Components/Inputs/SplitTypeInput";
-import SplitTypeRecipientList from "../Components/SplitTypeRecipientList";
+import EqualSplitTypeRecipientList from "./EqualSplitTypeRecipientList";
+import SplitTypeInput from "../Components/SplitTypeInput";
+import SplitTypeRecipientList from "./SplitTypeRecipientList";
 
 const EURO = import.meta.env.VITE_EURO;
 

@@ -35,6 +35,7 @@ const MemberDialogContent = forwardRef(
           <label>Debt: </label>
           <input
             name="memberDebt"
+            step={0.01}
             required
             type="number"
             placeholder="New member's debt"
@@ -58,7 +59,6 @@ async function addMember(formData) {
     debt: memberDebt,
     groupId: groupId,
   };
-  console.log(member);
 
   try {
     const response = await fetch(`${apiUrl}/api/Members`, {
@@ -70,8 +70,10 @@ async function addMember(formData) {
       throw new Error("Failed to POST new member.");
     }
     console.log(`Added new member \"${memberName} ${memberSurname}\"`);
+    alert(`Sucessfully added new member \"${memberName} ${memberSurname}\"!`);
   } catch (error) {
     console.log(error);
+    alert("Failed to add member...");
   }
 
   refreshDad((x) => ++x);

@@ -1,7 +1,6 @@
 import React from "react";
 
 const RecipientList = ({ recipients, members }) => {
-  console.log(recipients);
   const list = recipients.map((r) => {
     const mem = members.find((m) => m.id == r.id);
     let memName, memSurname;

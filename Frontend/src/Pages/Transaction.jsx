@@ -32,7 +32,6 @@ const Transaction = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     if (amount > 0) {
-      console.log("Posting...");
       const transaction = {
         groupId: groupId,
         senderId: payerId,
@@ -112,7 +111,6 @@ async function getData(setMembers, setGroup, groupId, setAmount, memberId) {
     groupId: 0,
   };
   const members = [user, ...fetchedGroup.members];
-  console.log(members);
   let amount = members.find((m) => m.id == memberId).debt;
   if (amount < 0) {
     amount *= -1;
@@ -147,8 +145,11 @@ async function postTransaction(transaction) {
     if (!response.ok) {
       throw new Error("Transaction failed");
     }
+
+    alert("Sucessfully made the transaction!");
   } catch (error) {
     console.log(error);
+    alert("Transaction failed...");
   }
 }
 

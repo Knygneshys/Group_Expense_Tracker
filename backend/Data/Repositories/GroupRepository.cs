@@ -25,7 +25,7 @@ namespace backend.Data.Repositories
             Group? group = await _context.Groups.Include(g => g.Members).FirstOrDefaultAsync(i => i.Id == id);
             if(group != null && group.Members != null)
             {
-                group.Members = group.Members.Where(mem => mem.isDeleted == false).ToList();
+                group.Members = group.Members.Where(mem => mem.isDeleted == false).OrderByDescending(mem => mem.Debt).ToList();
             }
 
             return group;

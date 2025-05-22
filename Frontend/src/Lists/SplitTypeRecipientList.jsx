@@ -1,5 +1,5 @@
 import React from "react";
-import SplitTypeInput from "./Inputs/SplitTypeInput";
+import SplitTypeInput from "../Components/SplitTypeInput";
 
 const EURO = import.meta.env.VITE_EURO;
 

@@ -75,7 +75,7 @@ export const TransactionList = ({ transactions }) => {
 async function fetchMembers(groupID) {
   try {
     const fetchUrl = `${apiUrl}/api/Members/ByGroup/${groupID}`;
-    console.log(fetchUrl);
+
     const response = await fetch(fetchUrl);
     if (!response.ok) {
       throw error(`Failed to fetch members by groupId: ${groupID}`);

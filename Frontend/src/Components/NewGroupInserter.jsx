@@ -17,9 +17,11 @@ const NewGroupAddition = ({ refreshDad }) => {
         throw new Error("Failed to add new group");
       }
       console.log(`Added new group: \"${groupName}\" succesfully!`);
+      alert("Sucessfully added new group!");
       refreshDad((x) => x + 1);
     } catch (error) {
       console.log(error);
+      alert("Failed to add new group...");
     }
   }
 
