@@ -39,9 +39,9 @@ function fetchSettleButton(member, setRefresh, goToTransaction) {
 
   return (
     <button
-      onClick={() => {
-        removeMember(member.id);
-        setRefresh((x) => ++x);
+      onClick={async () => {
+        await removeMember(member.id);
+        setRefresh((x) => x + 1);
       }}
     >
       Remove

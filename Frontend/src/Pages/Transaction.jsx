@@ -113,7 +113,10 @@ async function getData(setMembers, setGroup, groupId, setAmount, memberId) {
   };
   const members = [user, ...fetchedGroup.members];
   console.log(members);
-  const amount = members.find((m) => m.id == memberId).debt;
+  let amount = members.find((m) => m.id == memberId).debt;
+  if (amount < 0) {
+    amount *= -1;
+  }
   setAmount(amount);
   setMembers(members);
 }
