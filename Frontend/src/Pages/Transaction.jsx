@@ -127,7 +127,6 @@ const Transaction = () => {
 
 async function getData(setMembers, setGroup, groupId, setAmount, memberId) {
   const fetchedGroup = await fetchGroup(groupId);
-  console.log(fetchedGroup);
   setGroup(fetchedGroup);
   const user = {
     id: 0,

@@ -38,9 +38,9 @@ namespace backend.Data.Entities
                 new Transaction { Id = 5, GroupId = 2, SenderId = 5, Amount = 100m, SplitType = 'D' }
             );
             modelBuilder.Entity<TransactionRecipient>().HasData(
-                new { Id = 1, RecipientId = 1, Payment = 0m, TransactionId = 1 },
-                new { Id = 2, RecipientId = 2, Payment = 0m, TransactionId = 1 },
-                new { Id = 3, RecipientId = 3, Payment = 0m, TransactionId = 1 },
+                new { Id = 1, RecipientId = 1, Payment = 30m, TransactionId = 1 },
+                new { Id = 2, RecipientId = 2, Payment = 30m, TransactionId = 1 },
+                new { Id = 3, RecipientId = 3, Payment = 30m, TransactionId = 1 },
 
                 new { Id = 4, RecipientId = 1, Payment = 50m, TransactionId = 2 },
                 new { Id = 5, RecipientId = 2, Payment = 30m, TransactionId = 2 },
@@ -50,8 +50,8 @@ namespace backend.Data.Entities
                 new { Id = 8, RecipientId = 2, Payment = 25m, TransactionId = 3 },
                 new { Id = 9, RecipientId = 3, Payment = 25m, TransactionId = 3 },
 
-                new { Id = 10, RecipientId = 4, Payment = 0m, TransactionId = 4 },
-                new { Id = 11, RecipientId = 5, Payment = 0m, TransactionId = 4 },
+                new { Id = 10, RecipientId = 4, Payment = 50m, TransactionId = 4 },
+                new { Id = 11, RecipientId = 5, Payment = 50m, TransactionId = 4 },
 
                 new { Id = 12, RecipientId = 4, Payment = 70m, TransactionId = 5 },
                 new { Id = 13, RecipientId = 5, Payment = 30m, TransactionId = 5 }
