@@ -12,38 +12,57 @@ const MemberDialogContent = forwardRef(
     refreshDad = setRefresh;
     return (
       <>
-        <div>
+        <div className="mb-3">
           <h3>Create a new member</h3>
         </div>
         <form action={addMember}>
-          <label>Name: </label>
-          <input
-            name="memberName"
-            required
-            type="text"
-            placeholder="New member's name"
-          />
-          <br />
-          <label>Surname: </label>
-          <input
-            name="memberSurname"
-            required
-            type="text"
-            placeholder="New member's surname"
-          />
-          <br />
-          <label>Debt: </label>
-          <input
-            name="memberDebt"
-            step={0.01}
-            required
-            type="number"
-            placeholder="New member's debt"
-          />
-          <br />
-          <button type="submit">Add</button>
+          <div className="mb-3">
+            <label className="form-label">Name:</label>
+            <input
+              className="form-control"
+              name="memberName"
+              required
+              type="text"
+              placeholder="New member's name"
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Surname:</label>
+            <input
+              className="form-control"
+              name="memberSurname"
+              required
+              type="text"
+              placeholder="New member's surname"
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Debt:</label>
+            <input
+              className="form-control"
+              name="memberDebt"
+              step={0.01}
+              required
+              type="number"
+              placeholder="New member's debt"
+            />
+          </div>
+
+          <div className="mb-3">
+            <button type="submit" className="btn btn-primary me-2">
+              Add
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={toggleDialog}
+            >
+              Close
+            </button>
+          </div>
         </form>
-        <button onClick={toggleDialog}>Close</button>
       </>
     );
   }
@@ -69,8 +88,8 @@ async function addMember(formData) {
     if (!response.ok) {
       throw new Error("Failed to POST new member.");
     }
-    console.log(`Added new member \"${memberName} ${memberSurname}\"`);
-    alert(`Sucessfully added new member \"${memberName} ${memberSurname}\"!`);
+    console.log(`Added new member "${memberName} ${memberSurname}"`);
+    alert(`Successfully added new member "${memberName} ${memberSurname}"!`);
   } catch (error) {
     console.log(error);
     alert("Failed to add member...");
