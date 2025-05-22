@@ -1,7 +1,7 @@
 import React from "react";
 
 const EURO = import.meta.env.VITE_EURO;
-
+const fontSizePt = "15pt";
 const EqualSplitTypeRecipientList = ({
   recipients,
   allRecipients,
@@ -16,11 +16,15 @@ const EqualSplitTypeRecipientList = ({
         debt > 0
           ? `User (you). Member owes you ${debt}${EURO}`
           : `User (you). In debt to member for: ${debt}${EURO}`;
-      return <div key={r.id}>{message}</div>;
+      return (
+        <div key={r.id} style={{ fontSize: fontSizePt }}>
+          {message}
+        </div>
+      );
     }
 
     return (
-      <div key={r.id}>
+      <div key={r.id} style={{ fontSize: fontSizePt }}>
         {r.name} {r.surname} {r.debt}
         {EURO}
       </div>

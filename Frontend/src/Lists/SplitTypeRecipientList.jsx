@@ -21,13 +21,19 @@ const SplitTypeRecipientList = ({
             : `User (you). In debt to member for: ${debt}${EURO}`;
       }
       return (
-        <div key={r.id}>
-          <label>{message}</label>
-          <SplitTypeInput
-            handleValueChange={handleValueChange}
-            index={index}
-            placeholder={placeholder}
-          />
+        <div key={r.id} style={{ margin: "7px" }} className="row mb-3">
+          <div className="col-12 text-center mb-2">
+            <label className="form-label">{message}</label>
+          </div>
+          <div className="col-12 d-flex justify-content-center">
+            <div div style={{ width: "200px" }}>
+              <SplitTypeInput
+                handleValueChange={handleValueChange}
+                index={index}
+                placeholder={placeholder}
+              />
+            </div>
+          </div>
         </div>
       );
     }

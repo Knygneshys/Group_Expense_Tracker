@@ -3,6 +3,7 @@ import React from "react";
 const SplitTypeInput = ({ handleValueChange, index, placeholder }) => {
   return (
     <input
+      className="form-control"
       type="number"
       min={0}
       step={0.01}

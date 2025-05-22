@@ -30,7 +30,7 @@ const MemberList = ({ members, setRefresh, goToTransaction }) => {
     );
   }
 
-  return <h2>Group is empty</h2>;
+  return <h2 style={{ padding: "50px" }}>Group is empty</h2>;
 };
 
 function fetchSettleButton(member, setRefresh, goToTransaction) {

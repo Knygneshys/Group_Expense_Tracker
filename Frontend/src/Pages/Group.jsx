@@ -4,7 +4,6 @@ import MemberList from "../Lists/MemberList";
 import MemberDialogContent from "../Components/Dialog_content/MemberDialogContent";
 import TransactionDialogContent from "../Components/Dialog_content/TransactionDialogContent";
 import { Header } from "../Components/Header";
-import "./Css/Group.css";
 const apiUrl = import.meta.env.VITE_API_URL;
 const EURO = import.meta.env.VITE_EURO;
 
@@ -108,7 +107,7 @@ const Group = () => {
               ref={memDialogRef}
             />
           </dialog>
-          <dialog ref={tranasctionDialogRef} style={{ height: "70vh" }}>
+          <dialog ref={tranasctionDialogRef}>
             <TransactionDialogContent
               key={refresh}
               transactions={transactions}
@@ -123,7 +122,7 @@ const Group = () => {
     return (
       <>
         <Header />
-        <h1>Loading...</h1>
+        <h1 class="pageContent">Loading...</h1>
       </>
     );
   }
