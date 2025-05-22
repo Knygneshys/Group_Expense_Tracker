@@ -27,12 +27,18 @@ const RecipientList = ({ recipients, members }) => {
 
   if (list != null) {
     return (
-      <table>
+      <table class="table table-bordered table-sm">
         <thead>
           <tr>
-            <td>Name</td>
-            <td>Surname</td>
-            <td>Payment</td>
+            <td>
+              <b>Name</b>
+            </td>
+            <td>
+              <b>Surname</b>
+            </td>
+            <td>
+              <b>Payment</b>
+            </td>
           </tr>
         </thead>
         <tbody>{list}</tbody>

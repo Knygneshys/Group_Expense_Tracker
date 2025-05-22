@@ -42,7 +42,7 @@ export const TransactionList = ({ transactions }) => {
 
       return (
         <div key={t.id}>
-          <table>
+          <table class="table table-borderless">
             <thead>
               <tr>
                 <th>Date</th>

@@ -108,7 +108,7 @@ const Group = () => {
               ref={memDialogRef}
             />
           </dialog>
-          <dialog ref={tranasctionDialogRef}>
+          <dialog ref={tranasctionDialogRef} style={{ height: "70vh" }}>
             <TransactionDialogContent
               key={refresh}
               transactions={transactions}
