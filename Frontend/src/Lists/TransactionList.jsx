@@ -4,7 +4,7 @@ import RecipientList from "./RecipientList";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const TransactionList = ({ transactions }) => {
-  const [members, setMembers] = useState(null);
+  const [members, setMembers] = useState([]);
 
   useEffect(() => {
     async function getData() {
@@ -16,22 +16,40 @@ export const TransactionList = ({ transactions }) => {
 
   if (members !== undefined) {
     const list = transactions.map((t) => {
-      console.log(t);
       let sender;
       if (t.senderId == 0) {
         sender = "User";
       } else {
         const mem = members.find((m) => m.id == t.senderId);
-        sender = `${mem.name} ${mem.surname}`;
+        if (mem != null) {
+          sender = `${mem.name} ${mem.surname}`;
+        } else {
+          sender = `Sender ID: ${t.senderId}`;
+        }
       }
+      let splitType;
+      switch (t.splitType) {
+        case "E":
+          splitType = "Equal";
+          break;
+        case "P":
+          splitType = "Percentage";
+          break;
+        default:
+          splitType = "Dynamic";
+      }
+
       return (
         <div key={t.id}>
           <table>
             <thead>
-              <th>Sender</th>
-              <th>Amount</th>
-              <th>Split type</th>
-              <th>Recipient count</th>
+              <tr>
+                <th>Date</th>
+                <th>Sender</th>
+                <th>Amount</th>
+                <th>Split type</th>
+                <th>Recipient count</th>
+              </tr>
             </thead>
             <tbody>
               <tr>
@@ -40,6 +58,7 @@ export const TransactionList = ({ transactions }) => {
                   <i>{sender}</i>
                 </td>
                 <td>{t.amount}</td>
+                <td>{splitType}</td>
                 <td>{t.recipients.length}</td>
               </tr>
             </tbody>
@@ -55,15 +74,16 @@ export const TransactionList = ({ transactions }) => {
 
 async function fetchMembers(groupID) {
   try {
-    const fetchUrl = `${apiUrl}/ByGroup/WithDeleted/${groupID}`;
+    const fetchUrl = `${apiUrl}/api/Members/ByGroup/${groupID}`;
+    console.log(fetchUrl);
     const response = await fetch(fetchUrl);
     if (!response.ok) {
       throw error(`Failed to fetch members by groupId: ${groupID}`);
     }
-    const group = await response.json();
+    const members = await response.json();
 
-    return group;
+    return members;
   } catch (error) {
-    conmsole.log(error);
+    console.log(error);
   }
 }

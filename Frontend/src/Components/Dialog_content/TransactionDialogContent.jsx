@@ -6,7 +6,7 @@ const TransactionDialogContent = forwardRef(
     return (
       <>
         <div>
-          <h3>Groups transactions</h3>
+          <h3>Group's transactions</h3>
         </div>
         <TransactionList transactions={transactions} />
         <button onClick={toggleDialog}>Close</button>
