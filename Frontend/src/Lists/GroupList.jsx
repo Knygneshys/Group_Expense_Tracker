@@ -15,7 +15,7 @@ const GroupList = ({ pageNr }) => {
       setGroups("empty");
       setGroupDebts("empty");
       const data = await fetchGroups(pageNr);
-      if (data.length <= 0) {
+      if (data.length <= 0 && pageNr > 0) {
         goBackAPage(pageNr);
       }
       setGroups(data);

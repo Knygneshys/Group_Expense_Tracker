@@ -45,7 +45,7 @@ const Group = () => {
         const fetchedGroup = await fetchGroup(groupId);
         const fetchedMembers = await fetchMembers(groupId, pageNr);
 
-        if (fetchedMembers.length <= 0) {
+        if (fetchedMembers.length <= 0 && pageNr > 0) {
           goBackAPage(pageNr);
         }
         const fetchedDebt = await fetchDebt(groupId);
