@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import RecipientList from "./RecipientList";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const EURO = import.meta.env.VITE_EURO;
 
 export const TransactionList = ({ transactions }) => {
   const [members, setMembers] = useState([]);
@@ -57,7 +58,10 @@ export const TransactionList = ({ transactions }) => {
                 <td>
                   <i>{sender}</i>
                 </td>
-                <td>{t.amount}</td>
+                <td>
+                  {t.amount}
+                  {EURO}
+                </td>
                 <td>{splitType}</td>
                 <td>{t.recipients.length}</td>
               </tr>

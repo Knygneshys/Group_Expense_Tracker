@@ -5,6 +5,7 @@ import MemberDialogContent from "../Components/Dialog_content/MemberDialogConten
 import TransactionDialogContent from "../Components/Dialog_content/TransactionDialogContent";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const EURO = import.meta.env.VITE_EURO;
 
 const Group = () => {
   const { id } = useParams();
@@ -69,7 +70,10 @@ const Group = () => {
     return (
       <div>
         <h1>{group.name}</h1>
-        <h3>Current group debt: {debt.toFixed(2)}</h3>
+        <h3>
+          Current group debt: {debt.toFixed(2)}
+          {EURO}
+        </h3>
         <MemberList
           members={members}
           setRefresh={setRefresh}

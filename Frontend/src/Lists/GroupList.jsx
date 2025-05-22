@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import NewGroupAddition from "../Components/NewGroupInserter";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const EURO = import.meta.env.VITE_EURO;
 
 const GroupList = () => {
   const [groups, setGroups] = useState("empty");
@@ -39,7 +40,10 @@ const GroupList = () => {
     const list = groups.map((group) => (
       <tr key={group.id}>
         <td>{group.name}</td>
-        <td>{groupDebts[group.id].toFixed(2)}</td>
+        <td>
+          {groupDebts[group.id].toFixed(2)}
+          {EURO}
+        </td>
         <td>
           <button onClick={() => goToGroup(group.id)}>Open</button>
         </td>

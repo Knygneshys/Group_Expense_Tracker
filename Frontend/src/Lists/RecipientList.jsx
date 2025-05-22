@@ -1,5 +1,7 @@
 import React from "react";
 
+const EURO = import.meta.env.VITE_EURO;
+
 const RecipientList = ({ recipients, members }) => {
   const list = recipients.map((r) => {
     const mem = members.find((m) => m.id == r.id);
@@ -15,7 +17,10 @@ const RecipientList = ({ recipients, members }) => {
       <tr key={r.id}>
         <td>{memName}</td>
         <td>{memSurname}</td>
-        <td>{r.payment}</td>
+        <td>
+          {r.payment}
+          {EURO}
+        </td>
       </tr>
     );
   });

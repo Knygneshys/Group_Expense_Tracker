@@ -12,7 +12,7 @@ const SplitTypeRecipientList = ({
 }) => {
   return recipients.map((r, index) => {
     if (r.id != payerId) {
-      let message = `${r.name} ${r.surname}. Current debt: ${r.debt}.`;
+      let message = `${r.name} ${r.surname}. Current debt: ${r.debt}${EURO}.`;
       if (r.id == 0) {
         const debt = allRecipients.find((r) => r.id == payerId).debt;
         message =

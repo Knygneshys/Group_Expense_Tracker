@@ -1,4 +1,5 @@
 const apiUrl = import.meta.env.VITE_API_URL;
+const EURO = import.meta.env.VITE_EURO;
 
 const MemberList = ({ members, setRefresh, goToTransaction }) => {
   if (members !== null && members.length > 0) {
@@ -6,7 +7,10 @@ const MemberList = ({ members, setRefresh, goToTransaction }) => {
       <tr key={mem.id}>
         <td>{mem.name}</td>
         <td>{mem.surname}</td>
-        <td>{mem.debt.toFixed(2)}</td>
+        <td>
+          {mem.debt.toFixed(2)}
+          {EURO}
+        </td>
         <td>{fetchSettleButton(mem, setRefresh, goToTransaction)}</td>
       </tr>
     ));
