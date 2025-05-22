@@ -56,14 +56,7 @@ namespace Backend.Data.Repositories
             Member? member = await _context.Members.FindAsync(recipientId);
             if (member != null && senderId == 0)
             {
-                if (member.Debt >= 0)
-                {
-                    member.Debt += amount;
-                }
-                else
-                {
-                    member.Debt -= amount;
-                }
+                member.Debt += amount;
                 await _context.SaveChangesAsync();
             }
             else if (member != null && recipientId != senderId && member.Debt < 0)

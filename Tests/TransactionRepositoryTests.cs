@@ -208,7 +208,7 @@ namespace Tests
             Member recipient4 = await memRepo.FindByIdAsync(4);
             Member recipient5 = await memRepo.FindByIdAsync(5);
             Assert.Equal(150m, recipient4.Debt);
-            Assert.Equal(-110m, recipient5.Debt);
+            Assert.Equal(-10m, recipient5.Debt);
         }
 
     }
