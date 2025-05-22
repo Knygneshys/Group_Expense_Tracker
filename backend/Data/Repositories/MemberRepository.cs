@@ -55,6 +55,11 @@ namespace backend.Data.Repositories
             return member;
         }
 
+        public async Task<List<Member>> GetAllByGroupIdAlongWithDeleted(int groupId)
+        {
+            return await _context.Members.Where(mem => mem.GroupId == groupId).ToListAsync();
+        }
+
         public async Task<Member?> UpdateAsync(int id, Member member)
         {
 

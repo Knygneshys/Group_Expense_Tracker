@@ -43,6 +43,16 @@ namespace Group_Expense_Tracker.Server.Controllers
         }
 
         // GET
+        [HttpGet("/ByGroup/WithDeleted/{groupId:int}")]
+        public async Task<ActionResult<IEnumerable<Member>>> GetMembersByGroupIdIncludeDeleted(int groupId)
+        {
+            var members = await _memberRepo.GetAllByGroupIdAlongWithDeleted(groupId);
+            if(members == null) { return NotFound(); }
+
+            return members;
+        }
+
+        // GET
         [HttpGet("ByGroup/{groupId:int}")]
         public async Task<ActionResult<IEnumerable<Member>>> GetMembersByGroupId(int groupId)
         {

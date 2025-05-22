@@ -1,7 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import MemberList from "../Lists/MemberList";
-import MemberDialogContent from "../Components/MemberDialogContent";
+import MemberDialogContent from "../Components/Dialog_content/MemberDialogContent";
+import TransactionDialogContent from "../Components/Dialog_content/TransactionDialogContent";
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Group = () => {
@@ -11,13 +13,15 @@ const Group = () => {
   const [debt, setDebt] = useState(null);
   const [members, setMembers] = useState([]);
   const [refresh, setRefresh] = useState(0);
-
-  const dialogRef = useRef(null);
+  const [transactions, setTransactions] = useState([]);
+  const memDialogRef = useRef(null);
+  const tranasctionDialogRef = useRef(null);
 
   const navigate = useNavigate();
   const goToTransaction = (groupId, memberId = 0) => {
     navigate(`/Transaction/${groupId}/${memberId}`);
   };
+
   useEffect(() => {
     const parsedId = parseInt(id, 10);
     setGroupId(parsedId);
@@ -28,6 +32,8 @@ const Group = () => {
       if (Number.isInteger(groupId)) {
         const fetchedGroup = await fetchGroup(groupId);
         const fetchedDebt = await fetchDebt(groupId);
+        const fetchedTransactions = await fetchTransactions(groupId);
+        setTransactions(fetchedTransactions);
         setGroup(fetchedGroup);
         setDebt(fetchedDebt);
         if (
@@ -41,13 +47,22 @@ const Group = () => {
     getData();
   }, [groupId, members, refresh]);
 
-  function toggleDialog() {
-    if (!dialogRef.current) {
+  function toggleMemDialog() {
+    if (!memDialogRef.current) {
       return;
     }
-    dialogRef.current.hasAttribute("open")
-      ? dialogRef.current.close()
-      : dialogRef.current.showModal();
+    memDialogRef.current.hasAttribute("open")
+      ? memDialogRef.current.close()
+      : memDialogRef.current.showModal();
+  }
+
+  function toggleTransactionDialog() {
+    if (!tranasctionDialogRef.current) {
+      return;
+    }
+    tranasctionDialogRef.current.hasAttribute("open")
+      ? tranasctionDialogRef.current.close()
+      : tranasctionDialogRef.current.showModal();
   }
 
   if (group !== null) {
@@ -60,7 +75,7 @@ const Group = () => {
           setRefresh={setRefresh}
           goToTransaction={goToTransaction}
         />
-        <button onClick={toggleDialog}>Add new member</button>
+        <button onClick={toggleMemDialog}>Add new member</button>
         <button
           onClick={() => {
             goToTransaction(groupId, 0);
@@ -68,12 +83,21 @@ const Group = () => {
         >
           Make transaction
         </button>
-        <dialog ref={dialogRef}>
+        <button onClick={toggleTransactionDialog}>Show transactions</button>
+        <dialog ref={memDialogRef}>
           <MemberDialogContent
-            toggleDialog={toggleDialog}
+            toggleDialog={toggleMemDialog}
             gId={groupId}
             setRefresh={setRefresh}
-            ref={dialogRef}
+            ref={memDialogRef}
+          />
+        </dialog>
+        <dialog ref={tranasctionDialogRef}>
+          <TransactionDialogContent
+            key={refresh}
+            transactions={transactions}
+            toggleDialog={toggleTransactionDialog}
+            ref={tranasctionDialogRef}
           />
         </dialog>
       </div>
@@ -106,6 +130,20 @@ async function fetchDebt(id) {
     const response = await fetch(`${apiUrl}/api/Groups/GroupDebt/${id}`);
     if (!response.ok) {
       throw new Error("Failed to fetch group debt");
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function fetchTransactions(groupId) {
+  try {
+    const response = await fetch(`${apiUrl}/api/Transactions/${groupId}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch group id's: ${groupId} transactions`);
     }
     const data = await response.json();
 

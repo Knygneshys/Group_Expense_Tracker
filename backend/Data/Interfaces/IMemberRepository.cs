@@ -11,5 +11,6 @@ namespace backend.Data.Interfaces
         bool MemberExists(int id);
         Task<Member?> UpdateAsync(int id, Member member);
         Task<List<Member>> GetAllByGroupId(int groupId);
+        Task<List<Member>> GetAllByGroupIdAlongWithDeleted(int groupId);
     }
 }
