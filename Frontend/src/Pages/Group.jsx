@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MemberList from "../Lists/MemberList";
 import MemberDialogContent from "../Components/Dialog_content/MemberDialogContent";
 import TransactionDialogContent from "../Components/Dialog_content/TransactionDialogContent";
+import { Header } from "../Components/Header";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const EURO = import.meta.env.VITE_EURO;
@@ -68,47 +69,51 @@ const Group = () => {
 
   if (group !== null) {
     return (
-      <div>
-        <h1>{group.name}</h1>
-        <h3>
-          Current group debt: {debt.toFixed(2)}
-          {EURO}
-        </h3>
-        <MemberList
-          members={members}
-          setRefresh={setRefresh}
-          goToTransaction={goToTransaction}
-        />
-        <button onClick={toggleMemDialog}>Add new member</button>
-        <button
-          onClick={() => {
-            goToTransaction(groupId, 0);
-          }}
-        >
-          Make transaction
-        </button>
-        <button onClick={toggleTransactionDialog}>Show transactions</button>
-        <dialog ref={memDialogRef}>
-          <MemberDialogContent
-            toggleDialog={toggleMemDialog}
-            gId={groupId}
+      <>
+        <Header />
+        <div>
+          <h1>{group.name}</h1>
+          <h3>
+            Current group debt: {debt.toFixed(2)}
+            {EURO}
+          </h3>
+          <MemberList
+            members={members}
             setRefresh={setRefresh}
-            ref={memDialogRef}
+            goToTransaction={goToTransaction}
           />
-        </dialog>
-        <dialog ref={tranasctionDialogRef}>
-          <TransactionDialogContent
-            key={refresh}
-            transactions={transactions}
-            toggleDialog={toggleTransactionDialog}
-            ref={tranasctionDialogRef}
-          />
-        </dialog>
-      </div>
+          <button onClick={toggleMemDialog}>Add new member</button>
+          <button
+            onClick={() => {
+              goToTransaction(groupId, 0);
+            }}
+          >
+            Make transaction
+          </button>
+          <button onClick={toggleTransactionDialog}>Show transactions</button>
+          <dialog ref={memDialogRef}>
+            <MemberDialogContent
+              toggleDialog={toggleMemDialog}
+              gId={groupId}
+              setRefresh={setRefresh}
+              ref={memDialogRef}
+            />
+          </dialog>
+          <dialog ref={tranasctionDialogRef}>
+            <TransactionDialogContent
+              key={refresh}
+              transactions={transactions}
+              toggleDialog={toggleTransactionDialog}
+              ref={tranasctionDialogRef}
+            />
+          </dialog>
+        </div>
+      </>
     );
   } else {
     return (
       <>
+        <Header />
         <h1>Loading...</h1>
       </>
     );

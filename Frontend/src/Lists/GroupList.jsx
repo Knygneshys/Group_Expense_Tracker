@@ -51,7 +51,7 @@ const GroupList = () => {
     ));
     return (
       <div>
-        <table>
+        <table className="table table-striped table-hover table-bordered">
           <thead>
             <tr>
               <th>Name</th>

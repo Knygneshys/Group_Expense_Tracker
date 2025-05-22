@@ -1,0 +1,17 @@
+.customHeader{
+    background-color: #EAE4D5;
+    height: 150px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    border: 3px solid black;
+}
+
+.groupLink{
+    font-size: 17pt;
+    color:black;
+}
+
+.mainHeader{
+    margin-bottom: 25px;
+    padding-top: 10px;
+}

@@ -2,6 +2,7 @@ import React, { use, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TransactionRecipientsList from "../Lists/TransactionRecipientsList";
 import Dropdown from "../Components/Dropdown/Dropdown";
+import { Header } from "../Components/Header";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -52,6 +53,7 @@ const Transaction = () => {
 
     return (
       <>
+        <Header />
         <h1>New Transaction in {group.name}</h1>
         <form onSubmit={handleSubmit}>
           <div>
@@ -95,9 +97,19 @@ const Transaction = () => {
       </>
     );
   } else if (group !== undefined && members.length <= 0) {
-    return <h3>The group is empty. Please add some members first.</h3>;
+    return (
+      <>
+        <Header />
+        <h3>The group is empty. Please add some members first.</h3>
+      </>
+    );
   }
-  return <h1>Loading...</h1>;
+  return (
+    <>
+      <Header />
+      <h1>Loading...</h1>
+    </>
+  );
 };
 
 async function getData(setMembers, setGroup, groupId, setAmount, memberId) {
